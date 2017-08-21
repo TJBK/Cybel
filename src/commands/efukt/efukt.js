@@ -35,6 +35,7 @@ let commands = {
             img = await document.querySelector('.image_content').src
           }
           try {
+            await msg.delete()
             msgObject.delete()
             await msg.channel.send({
               embed: {
