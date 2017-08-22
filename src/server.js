@@ -8,7 +8,7 @@ let client = new discord.Client()
 
 client.on('ready', () => {
   console.log(client.user.tag + ' has started trying to login.')
-  client.user.setGame('with ' + client.users.size + ' people')
+  client.user.setGame('with ' + client.users.size + ' people', {type: 'PLAYING'})
   loadCMD()
 })
 
@@ -16,7 +16,7 @@ client.on('message', async (msg) => {
   let userID = await msg.author.id
   let serverID = await msg.guild.id
   db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
-    if (err) return console.error(err)
+    if (err) throw err
     if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) utl.check(client, msg, serverDoc)
     if (serverDoc.level) utl.points(client, userID, msg)
   })
@@ -44,7 +44,7 @@ client.on('message', async (msg) => {
           file: img
         }
       }
-    })
+    }).catch(console.error)
   }
 })
 
@@ -60,14 +60,14 @@ client.on('guildCreate', (guild) => {
     greetingString: 'String',
     leaveString: 'String'
   })
-  server.save((err, serverInfo) => { if (err) return console.error(err) })
+  server.save((err, serverInfo) => { if (err) throw err })
 })
 
 client.on('guildMemberAdd', (member) => {
   let guild = member.guild
   let serverID = guild.id
   db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
-    if (err) return console.error(err)
+    if (err) throw err
     if (!serverDoc.greeting) return
     let chID = await serverDoc.greetingChannel
     let channel = await guild.channels.get(chID)
@@ -79,7 +79,7 @@ client.on('guildMemberRemove', (member) => {
   let guild = member.guild
   let serverID = guild.id
   db.ServerDB.findOne({ _id: serverID }, async (err, serverDoc) => {
-    if (err) return console.error(err)
+    if (err) throw err
     if (!serverDoc.greeting) return
     let chID = await serverDoc.greetingChannel
     let channel = await guild.channels.get(chID)
@@ -89,4 +89,4 @@ client.on('guildMemberRemove', (member) => {
 
 client.login(token)
     .then(tokenA => console.log('Logged in with ' + tokenA + ''))
-    .catch(err => console.error(err))
+    .catch(console.error)

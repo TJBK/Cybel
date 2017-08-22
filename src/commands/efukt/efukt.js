@@ -15,13 +15,13 @@ let commands = {
       url: url,
       followRedirect: false
     }, (err, res, body) => {
-      if (err) return console.error(err)
+      if (err) throw err
       let newUrl = res.headers.location
       jsdom.env({
         url: newUrl,
         scripts: ['https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'],
         done: async (err, window) => {
-          if (err) return console.error(err)
+          if (err) throw err
           global.window = await window
           global.$ = await window.$
           global.document = await window.document
@@ -35,8 +35,8 @@ let commands = {
             img = await document.querySelector('.image_content').src
           }
           try {
-            await msg.delete()
-            msgObject.delete()
+            await msg.delete().catch(console.error)
+            msgObject.delete().catch(console.error)
             await msg.channel.send({
               embed: {
                 title: title,
@@ -48,7 +48,7 @@ let commands = {
                   height: 250
                 }
               }
-            })
+            }).catch(console.error)
           } catch (err) {}
         }
       })

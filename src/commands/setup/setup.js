@@ -3,19 +3,19 @@ let commands = {
   use: '<command> <instruction> <suffix>',
   desc: 'The is prefix that\'s all you need at the moment',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    if (!utl.isAdmin(msg.member)) return msg.reply('Sorry you don\'t have perms for that').delete(3000)
+    if (!utl.isAdmin(msg.member)) return msg.reply('Sorry you don\'t have perms for that').then(message => message.delete(60000))
     let serverID = msg.guild.id
     let setupPro = suffix.split(' ')
     switch (setupPro[0]) {
       case 'level':
-        db.ServerDB.update({ _id: serverID }, {$set: { level: setupPro[1] }}, (err, newLevel) => { if (err) return console.error(err) })
+        db.ServerDB.update({ _id: serverID }, {$set: { level: setupPro[1] }}, (err, newLevel) => { if (err) throw err })
         break
       case 'spam':
-        db.ServerDB.update({ _id: serverID }, {$set: { spam: setupPro[1] }}, (err, newSpam) => { if (err) return console.error(err) })
+        db.ServerDB.update({ _id: serverID }, {$set: { spam: setupPro[1] }}, (err, newSpam) => { if (err) throw err })
         break
       case 'gl':
         db.ServerDB.update({ _id: serverID }, {$set: { greeting: setupPro[1] }}, (err, newGreet) => {
-          if (err) return console.error(err)
+          if (err) throw err
           let guild = msg.guild
           try {
             guild.createChannel('welcome-leave-log', 'text', {
@@ -25,13 +25,13 @@ let commands = {
               }],
               reason: 'For the join and leave log'
             }).then(ch => {
-              db.ServerDB.update({ _id: serverID }, {$set: { greetingChannel: ch.id }}, (err, ch) => { if (err) return console.error(err) })
+              db.ServerDB.update({ _id: serverID }, {$set: { greetingChannel: ch.id }}, (err, ch) => { if (err) throw err })
             }).catch(console.error)
           } catch (err) {}
         })
         break
       case 'prefix':
-        db.ServerDB.update({ _id: serverID }, {$set: { prefix: setupPro[1] }}, (err, newPrefix) => { if (err) return console.error(err) })
+        db.ServerDB.update({ _id: serverID }, {$set: { prefix: setupPro[1] }}, (err, newPrefix) => { if (err) throw err })
         break
       case 'roles':
         let msgObject
@@ -63,7 +63,7 @@ let commands = {
         await msgObject.edit('Done roles setup')
         break
       case 'spamChannel':
-        db.ServerDB.update({ _id: serverID }, {$set: { spamChannel: msg.channel.id }}, (err, newSpamC) => { if (err) return console.error(err) })
+        db.ServerDB.update({ _id: serverID }, {$set: { spamChannel: msg.channel.id }}, (err, newSpamC) => { if (err) throw err })
         break
     }
   }

@@ -4,7 +4,7 @@ let commands = {
   desc: 'Check Latency',
   process: async (msg, suffix, client) => {
     let lat = await new Date().getTime() - msg.createdTimestamp
-    await msg.delete().catch(err => console.log(err))
+    await msg.delete().catch(console.error)
     await msg.channel.send({
       embed: {
         fields: [{
@@ -17,7 +17,7 @@ let commands = {
         }],
         timestamp: new Date()
       }
-    })
+    }).catch(console.error)
   }
 }
 

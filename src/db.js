@@ -11,7 +11,7 @@ let options = {
 try {
   mongoose.connect(mongodbURL, options)
 } catch (err) {
-  console.error(err)
+  if (err) throw err
   process.exit(1)
 }
 

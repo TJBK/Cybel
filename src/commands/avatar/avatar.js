@@ -9,6 +9,7 @@ let commands = {
         format: 'png',
         size: 2048
       })
+      await msg.delete()
       await msg.channel.send({
         embed: {
           description: 'Download avatar for ' + mention.username + ' [here](' + av + ')',
@@ -18,7 +19,7 @@ let commands = {
         }
       })
     } catch (err) {
-      msg.channel.send('Fail', err)
+      msg.channel.send('Fail', err).then(message => message.delete(60000)).catch(console.error)
     }
   }
 }

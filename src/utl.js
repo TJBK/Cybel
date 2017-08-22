@@ -32,7 +32,7 @@ export let check = async(client, msg, serverDoc) => {
         embed: cms,
         split: true
       })
-    } catch (err) { console.log(err) }
+    } catch (err) { throw err }
   } else {
     try {
       await cmd.process(msg, suffix, client, serverDoc, db, utl)
@@ -50,16 +50,16 @@ export let points = (client, userID, msg) => {
         level: 0
       })
       userInfo.save(function (err, userInfo) {
-        if (err) return console.error(err)
+        if (err) throw err
       })
     } else {
       let addP = result.points + 1
       let curLevel = Math.floor(0.1 * Math.sqrt(addP))
       if (curLevel > result.level) {
-        msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn')
+        msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn').catch(console.error)
       }
       db.LevelDB.findOneAndUpdate({_id: userID}, {$set: {points: addP, level: curLevel}}, {new: true}, (err, newRec) => {
-        if (err) return console.error(err)
+        if (err) throw err
       })
     }
   })

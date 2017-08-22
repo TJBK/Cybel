@@ -17,15 +17,16 @@ let commands = {
       let roles = role[i]
       if (suffix.includes(roles)) abuse = await true; break
     }
-    if (abuse) await msg.reply('Sorry ' + suffix + ' is not allowed')
+    if (abuse) await msg.reply('Sorry ' + suffix + ' is not allowed').catch(console.error)
     let userID = await msg.author.id
     let s = new db.SaysDB({
       auther: userID,
       say: suffix
     })
+    await msg.delete().catch(console.error)
     await s.save((err, s) => {
-      if (err) return console.error(err)
-      msg.channel.send('I have stored ' + suffix + ' congrats')
+      if (err) throw err
+      msg.channel.send('I have stored ' + suffix + ' congrats').then(message => message.delete(60000)).catch(console.error)
     })
   }
 }
