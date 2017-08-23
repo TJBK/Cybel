@@ -28,15 +28,16 @@ export let check = async(client, msg, serverDoc) => {
       await cms.fields.push(cmi)
     }
     try {
+      await msg.delete()
       await msg.channel.send({
         embed: cms,
         split: true
-      })
+      }).then(message => message.delete({timeout: 60000})).catch(console.error)
     } catch (err) { throw err }
   } else {
     try {
       await cmd.process(msg, suffix, client, serverDoc, db, utl)
-    } catch (err) {};
+    } catch (err) { };
   }
 }
 
@@ -56,7 +57,7 @@ export let points = (client, userID, msg) => {
       let addP = result.points + 1
       let curLevel = Math.floor(0.1 * Math.sqrt(addP))
       if (curLevel > result.level) {
-        msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn').catch(console.error)
+        msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn').then(message => message.delete({timeout: 60000})).catch(console.error)
       }
       db.LevelDB.findOneAndUpdate({_id: userID}, {$set: {points: addP, level: curLevel}}, {new: true}, (err, newRec) => {
         if (err) throw err

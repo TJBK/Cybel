@@ -12,7 +12,7 @@ let commands = {
       await msg.channel.send(clean(evaled), { code: 'xl', split: true })
       await msg.delete()
     } catch (err) {
-      await msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``)
+      await msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``).then(message => message.delete({timeout: 60000})).catch(console.error)
     }
   }
 }

@@ -5,10 +5,16 @@ import {loadCMD} from './load.js'
 import * as utl from './utl.js'
 
 let client = new discord.Client()
+process.on('unhandledRejection', console.error)
 
 client.on('ready', () => {
   console.log(client.user.tag + ' has started trying to login.')
-  client.user.setGame('with ' + client.users.size + ' people', {type: 'PLAYING'})
+  client.user.setPresence({
+    game: {
+      name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
+      type: 0
+    }
+  })
   loadCMD()
 })
 
@@ -36,7 +42,7 @@ client.on('message', async (msg) => {
   if (msg.author.id !== client.user.id) {
     let f = msg.content.toLowerCase()
     if (f !== 'f') return
-    let img = await 'https://cdn.discordapp.com/attachments/336187381952806925/344289790482579456/respect.jpg'
+    let img = await 'https://my.mixtape.moe/rohrdz.jpg'
     await msg.channel.send({
       embed: {
         title: 'Paid Your Respects',
@@ -61,6 +67,21 @@ client.on('guildCreate', (guild) => {
     leaveString: 'String'
   })
   server.save((err, serverInfo) => { if (err) throw err })
+  client.user.setPresence({
+    game: {
+      name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
+      type: 0
+    }
+  })
+})
+
+client.on('guildRemove', (guild) => {
+  client.user.setPresence({
+    game: {
+      name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
+      type: 0
+    }
+  })
 })
 
 client.on('guildMemberAdd', (member) => {

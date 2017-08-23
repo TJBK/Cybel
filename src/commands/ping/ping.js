@@ -17,7 +17,7 @@ let commands = {
         }],
         timestamp: new Date()
       }
-    }).catch(console.error)
+    }).then(message => message.delete({timeout: 60000})).catch(console.error)
   }
 }
 

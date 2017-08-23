@@ -26,7 +26,7 @@ let commands = {
     await msg.delete().catch(console.error)
     await s.save((err, s) => {
       if (err) throw err
-      msg.channel.send('I have stored ' + suffix + ' congrats').then(message => message.delete(60000)).catch(console.error)
+      msg.channel.send('I have stored ' + suffix + ' congrats').then(message => message.delete({timeout: 60000})).catch(console.error)
     })
   }
 }

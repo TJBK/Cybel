@@ -12,10 +12,11 @@ let commands = {
     let gRCountry = await msg.guild.roles.find('name', suffix).id
     let grV = await msg.guild.roles.find('name', 'Verified').id
     let roles = [gRCountry, grV]
+    await msg.delete()
     try {
       await msg.member.addRoles(roles)
     } catch (err) {
-      await msg.channel.send('You either have this region or try adding a captial letter')
+      await msg.channel.send('You either have this region or try adding a captial letter').then(message => message.delete({timeout: 60000})).catch(console.error)
     }
   }
 }
