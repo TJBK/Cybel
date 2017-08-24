@@ -9,7 +9,18 @@ let commands = {
     try {
       let evaled = await eval(suffix)
       if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-      await msg.channel.send(clean(evaled), { code: 'xl', split: true })
+      await msg.channel.send({
+        embed: {
+          fields: [{
+            name: ':inbox_tray: Input',
+            value: clean(suffix)
+          },
+          {
+            name: ':outbox_tray: Output',
+            value: clean(evaled)
+          }]
+        }
+      }).then(message => message.delete({timeout: 120000})).catch(console.error)
       await msg.delete()
     } catch (err) {
       await msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``).then(message => message.delete({timeout: 60000})).catch(console.error)

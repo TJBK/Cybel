@@ -16,13 +16,12 @@ export let check = async(client, msg, serverDoc) => {
   let cmd = await commands.find(x => x.name === cmdtext)
   if (cmdtext === 'help') {
     let cms = await {
-      title: 'Commands',
-      description: 'Hey ' + msg.author.username + ', Commands on this server starts with **' + serverDoc.prefix + '**'
+      title: 'Commands List'
     }
     cms.fields = []
     for (let i in commands) {
       let cmi = await {
-        name: '' + commands[i].name + ' ' + commands[i].use + '',
+        name: '' + serverDoc.prefix + '' + commands[i].name + ' ' + commands[i].use + '',
         value: commands[i].desc
       }
       await cms.fields.push(cmi)
@@ -57,7 +56,8 @@ export let points = (client, userID, msg) => {
       let addP = result.points + 1
       let curLevel = Math.floor(0.1 * Math.sqrt(addP))
       if (curLevel > result.level) {
-        msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn').then(message => message.delete({timeout: 60000})).catch(console.error)
+        msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn')
+          .then(message => message.delete({timeout: 60000})).catch(console.error)
       }
       db.LevelDB.findOneAndUpdate({_id: userID}, {$set: {points: addP, level: curLevel}}, {new: true}, (err, newRec) => {
         if (err) throw err

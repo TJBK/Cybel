@@ -24,7 +24,7 @@ let dbName = (config) => {
 }
 
 let fin = (config) => {
-  console.log(config)
+  console.log(config.token + ' ' + config.dbName)
   rl.question('Is this right yes or no? ', (answer) => {
     switch (answer) {
       case ('yes'):
