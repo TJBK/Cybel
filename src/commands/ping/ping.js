@@ -4,16 +4,18 @@ let commands = {
   desc: 'Check Latency',
   process: async (msg, suffix, client) => {
     let lat = await new Date().getTime() - msg.createdTimestamp
-    await msg.delete().catch(console.error)
+    await msg.delete(100).catch(console.error)
     await msg.channel.send({
       embed: {
         fields: [{
           name: 'Bot Latency',
-          value: ':timer: ' + lat + 'ms'
+          value: ':timer: ' + lat + 'ms',
+          inline: true
         },
         {
           name: 'API Latency',
-          value: ':sparkling_heart: ' + Math.round(client.ping) + 'ms'
+          value: ':sparkling_heart: ' + Math.round(client.ping) + 'ms',
+          inline: true
         }],
         timestamp: new Date()
       }
