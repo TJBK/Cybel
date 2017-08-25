@@ -19,7 +19,7 @@ let commands = {
         }
       })
     } catch (err) {
-      msg.channel.send('Fail', err).then(message => message.delete({timeout: 60000})).catch(console.error)
+      await msg.channel.send('Fail', err).then(message => message.delete({timeout: 60000})).catch(console.error)
     }
   }
 }
