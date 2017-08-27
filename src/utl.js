@@ -1,9 +1,11 @@
 import {commands} from './load.js'
 import * as db from './db.js'
 import * as utl from './utl.js'
+import {botOwner} from './config.json'
 
 export let isAdmin = (member) => {
-  return member.hasPermission('ADMINISTRATOR')
+  if (member.id !== botOwner) return member.hasPermission('ADMINISTRATOR')
+  return true
 }
 
 export let isNSFW = (channel) => {

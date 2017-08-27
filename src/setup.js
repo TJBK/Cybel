@@ -19,12 +19,19 @@ let start = () => {
 let dbName = (config) => {
   rl.question('dbName: ', (answer) => {
     config.dbName = answer
+    botOwner(config)
+  })
+}
+
+let botOwner = (config) => {
+  rl.question('botOwner: ', (answer) => {
+    config.botOwner = answer.toString()
     fin(config)
   })
 }
 
 let fin = (config) => {
-  console.log(config.token + ' ' + config.dbName)
+  console.log(config.token + ' ' + config.dbName + ' ' + config.botOwner)
   rl.question('Is this right yes or no? ', (answer) => {
     switch (answer) {
       case ('yes'):
