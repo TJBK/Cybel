@@ -3,13 +3,8 @@ import {dbName} from './config'
 
 let mongodbURL = 'mongodb://127.0.0.1:27017/' + dbName
 
-let options = {
-  server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
-  replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
-}
-
 try {
-  mongoose.connect(mongodbURL, options)
+  mongoose.connection.openUri(mongodbURL)
 } catch (err) {
   if (err) throw err
   process.exit(1)
