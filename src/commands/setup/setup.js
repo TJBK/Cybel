@@ -44,10 +44,7 @@ let commands = {
         }
       }
     }).catch(console.error)
-    let collector = msg.channel.createMessageCollector(
-      m => m.content,
-      {max: 1}
-    )
+    let collector = msg.channel.createMessageCollector(m => m.content, {max: 1})
     collector.on('collect', m => m.delete())
     collector.on('end', collected => collected.map(async x => {
       let setupText = x.content
@@ -211,6 +208,7 @@ let commands = {
         default:
           setupMsg.edit({embed: {title: 'Check your spelling'}}).then(message => message.delete({timeout: 120000})).catch(console.error)
       }
+      msg.delete().catch(console.error)
     }))
   }
 }
