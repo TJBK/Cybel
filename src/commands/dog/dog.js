@@ -7,20 +7,16 @@ let commands = {
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     request({url: 'https://random.dog/woof.json', json: true}, async (err, res, json) => {
       if (err) throw err
-      let dog
-      if (!err && res.statusCode === 200) {
-        dog = JSON.parse(json)
-      }
       let embed = {}
       let vid = false
-      if (dog.url.indexOf('mp4') !== -1) vid = true
+      if (json.url.indexOf('mp4') !== -1) vid = true
       embed = {
-        description: 'Get doggie [here](' + dog.url + ')',
+        description: 'Get doggie [here](' + json.url + ')',
         image: {
-          url: dog.url
+          url: json.url
         }
       }
-      if (vid) embed.description = 'Get doggie video [here](' + dog.url + ')'
+      if (vid) embed.description = 'Get doggie video [here](' + json.url + ')'
       try {
         msg.delete()
         msg.channel.send({embed: embed})

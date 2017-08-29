@@ -43,7 +43,7 @@ export let check = async (client, msg, serverDoc) => {
 }
 
 export let points = (client, userID, msg) => {
-  db.LevelDB.findOne({_id: userID}, function (err, result) {
+  db.LevelDB.findOne({_id: userID}, (err, result) => {
     if (err) console.log(err)
     if (!result) {
       let userInfo = new db.LevelDB({
@@ -51,7 +51,7 @@ export let points = (client, userID, msg) => {
         points: 0,
         level: 0
       })
-      userInfo.save(function (err, userInfo) {
+      userInfo.save((err, userInfo) => {
         if (err) throw err
       })
     } else {
