@@ -6,11 +6,11 @@
   "scripts": {
     "debug-start": "nodemon ./src/server.js --exec babel-node --presets es2015,stage-2",
     "build": "babel ./src -d ./dist",
-    "bg": "screen -dmS antidenjo npm run serve",
-    "serve": "node dist/server.js",
+    "bg": "screen -dmS antidenjo npm run start",
+    "start": "node dist/server.js",
     "win": "start.bat",
     "int-lin": "./dist/setup.js",
-    "lin": "npm run build && npm run bg",
+    "pn2": "pm2 start npm run start",
     "standard": "standard ./src"
   },
   "author": "",
@@ -24,6 +24,7 @@
     "mongoose": "^4.11.6",
     "node-opus": "^0.2.6",
     "node-wit": "^4.3.0",
+    "pm2": "^2.6.1",
     "request": "^2.81.0",
     "to-markdown": "^3.1.0"
   },

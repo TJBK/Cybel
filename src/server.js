@@ -5,7 +5,6 @@ import {loadCMD} from './load.js'
 import * as utl from './utl.js'
 
 let client = new discord.Client()
-process.on('unhandledRejection', console.error)
 
 client.on('ready', () => {
   console.log(client.user.tag + ' has started trying to login.')
@@ -37,7 +36,7 @@ client.on('message', async (msg) => {
       greetingString: 'String',
       leaveString: 'String'
     })
-    server.save((err, serverInfo) => { if (err) return console.error(err) })
+    server.save((err, serverInfo) => { if (err) throw err })
   }
   if (msg.author.id !== client.user.id) {
     let f = msg.content.toLowerCase()
@@ -111,3 +110,6 @@ client.on('guildMemberRemove', (member) => {
 client.login(token)
     .then(tokenA => console.log('Logged in with ' + tokenA + ''))
     .catch(console.error)
+
+process.on('unhandledRejection', console.error)
+process.on('exit', () => client.kill())

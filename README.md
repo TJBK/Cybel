@@ -5,6 +5,9 @@
 
 ## Installation
 
+### Requirements
+pm2
+
 ### Windows
 Just run the bat file
 
