@@ -5,7 +5,7 @@ let commands = {
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     let user = msg.guild.members.array()
     let role = msg.guild.roles.array()
-    let abuse = false
+    let abuse = await false
     if (suffix === '@everyone' || suffix === '@here') {
       abuse = await true
     }
