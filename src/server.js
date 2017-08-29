@@ -18,8 +18,8 @@ client.on('ready', () => {
 })
 
 client.on('message', async (msg) => {
-  let userID = await msg.author.id
-  let serverID = await msg.guild.id
+  let userID = msg.author.id
+  let serverID = msg.guild.id
   db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
     if (err) throw err
     if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) utl.check(client, msg, serverDoc)
@@ -41,8 +41,8 @@ client.on('message', async (msg) => {
   if (msg.author.id !== client.user.id) {
     let f = msg.content.toLowerCase()
     if (f !== 'f') return
-    let img = await 'https://my.mixtape.moe/rohrdz.jpg'
-    await msg.channel.send({
+    let img = 'https://my.mixtape.moe/rohrdz.jpg'
+    msg.channel.send({
       embed: {
         title: 'Paid Your Respects',
         image: {
@@ -89,9 +89,9 @@ client.on('guildMemberAdd', (member) => {
   db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
     if (err) throw err
     if (!serverDoc.greeting) return
-    let chID = await serverDoc.greetingChannel
-    let channel = await guild.channels.get(chID)
-    await channel.send('Welcome <@' + member.id + '>. Please read the <#324558902765027328> and make a <#339245304710955010> to be verified. <@&344282081670725634>.')
+    let chID = serverDoc.greetingChannel
+    let channel = guild.channels.get(chID)
+    channel.send('Welcome <@' + member.id + '>. Please read the <#324558902765027328> and make a <#339245304710955010> to be verified. <@&344282081670725634>.')
   })
 })
 
@@ -101,9 +101,9 @@ client.on('guildMemberRemove', (member) => {
   db.ServerDB.findOne({ _id: serverID }, async (err, serverDoc) => {
     if (err) throw err
     if (!serverDoc.greeting) return
-    let chID = await serverDoc.greetingChannel
-    let channel = await guild.channels.get(chID)
-    await channel.send('Press F to pay respect for ' + member.displayName + '.')
+    let chID = serverDoc.greetingChannel
+    let channel = guild.channels.get(chID)
+    channel.send('Press F to pay respect for ' + member.displayName + '.')
   })
 })
 

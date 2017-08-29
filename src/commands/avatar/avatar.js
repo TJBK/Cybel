@@ -3,14 +3,14 @@ let commands = {
   use: '<command> <user>',
   desc: 'Get a users avatar',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
+    let mention = msg.mentions.users.first()
+    let av = mention.avatarURL({
+      format: 'png',
+      size: 2048
+    })
     try {
-      let mention = await msg.mentions.users.first()
-      let av = await mention.avatarURL({
-        format: 'png',
-        size: 2048
-      })
-      await msg.delete()
-      await msg.channel.send({
+      msg.delete()
+      msg.channel.send({
         embed: {
           description: 'Download avatar for ' + mention.username + ' [here](' + av + ')',
           image: {
@@ -19,7 +19,7 @@ let commands = {
         }
       })
     } catch (err) {
-      await msg.channel.send('Fail', err).then(message => message.delete({timeout: 60000})).catch(console.error)
+      msg.channel.send('Fail', err).then(message => message.delete({timeout: 60000})).catch(console.error)
     }
   }
 }

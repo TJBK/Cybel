@@ -6,10 +6,10 @@ let commands = {
     let clean = (text) => {
       if (typeof (text) === 'string') { return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203)) } else { return text }
     }
+    let evaled = eval(suffix)
+    if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
     try {
-      let evaled = await eval(suffix)
-      if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-      await msg.channel.send({
+      msg.channel.send({
         embed: {
           fields: [{
             name: ':inbox_tray: Input',
@@ -20,10 +20,10 @@ let commands = {
             value: clean(evaled)
           }]
         }
-      }).then(message => message.delete({timeout: 120000})).catch(console.error)
-      await msg.delete()
+      }).then(message => message.delete({timeout: 120000}))
+      msg.delete()
     } catch (err) {
-      await msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``).then(message => message.delete({timeout: 60000})).catch(console.error)
+      msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``).then(message => message.delete({timeout: 60000}))
     }
   }
 }

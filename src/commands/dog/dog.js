@@ -5,11 +5,11 @@ let commands = {
   use: '<command>',
   desc: 'Get a random dog pic/vid',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    await request({url: 'https://random.dog/woof.json', json: true}, async (err, res, json) => {
+    request({url: 'https://random.dog/woof.json', json: true}, async (err, res, json) => {
       if (err) throw err
       let dog
       if (!err && res.statusCode === 200) {
-        dog = await JSON.parse(json)
+        dog = JSON.parse(json)
       }
       let embed = {}
       let vid = false
@@ -21,8 +21,12 @@ let commands = {
         }
       }
       if (vid) embed.description = 'Get doggie video [here](' + dog.url + ')'
-      await msg.delete().catch(console.error)
-      await msg.channel.send({embed: embed}).catch(console.error)
+      try {
+        msg.delete()
+        msg.channel.send({embed: embed})
+      } catch (err) {
+        msg.channel.send('Fail' + err).then(message => message.delete({timeout: 60000}))
+      }
     })
   }
 }

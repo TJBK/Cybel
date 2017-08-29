@@ -6,8 +6,7 @@ let mongodbURL = 'mongodb://127.0.0.1:27017/' + dbName
 try {
   mongoose.connection.openUri(mongodbURL)
 } catch (err) {
-  if (err) throw err
-  process.exit(1)
+  throw err
 }
 
 let db = mongoose.connection
