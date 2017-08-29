@@ -7,15 +7,15 @@ let commands = {
     let role = msg.guild.roles.array()
     let abuse = false
     if (suffix === '@everyone' || suffix === '@here') {
-      abuse = true
+      abuse = await true
     }
     for (let i in user) {
       let users = user[i]
-      if (suffix.includes(users)) abuse = true; break
+      if (suffix.includes(users)) abuse = await true; break
     }
     for (let i in role) {
       let roles = role[i]
-      if (suffix.includes(roles)) abuse = true; break
+      if (suffix.includes(roles)) abuse = await true; break
     }
     if (abuse) msg.reply('Sorry ' + suffix + ' is not allowed')
     try {
