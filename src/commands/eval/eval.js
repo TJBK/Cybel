@@ -3,6 +3,7 @@ let commands = {
   use: '<command> <code>',
   desc: 'Execute JS code',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
+    if (!utl.isEval(msg.member)) return msg.reply('Sorry you don\'t have perms for that').then(message => message.delete({timeout: 60000})).catch(console.error)
     let clean = (text) => {
       if (typeof (text) === 'string') { return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203)) } else { return text }
     }

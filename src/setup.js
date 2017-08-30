@@ -26,12 +26,19 @@ let dbName = (config) => {
 let botOwner = (config) => {
   rl.question('botOwner: ', (answer) => {
     config.botOwner = answer.toString()
+    userEval(config)
+  })
+}
+
+let userEval = (config) => {
+  rl.question('userEval (user spaces to split): ', (answer) => {
+    config.userEval = answer.toString().split(' ')
     fin(config)
   })
 }
 
 let fin = (config) => {
-  console.log(config.token + ' ' + config.dbName + ' ' + config.botOwner)
+  console.log('Token: ' + config.token + '\ndbName: ' + config.dbName + '\nbotOwner: ' + config.botOwner + '\nuserEval: ' + config.userEval)
   rl.question('Is this right yes or no? ', (answer) => {
     switch (answer) {
       case ('yes'):
