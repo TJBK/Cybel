@@ -138,7 +138,7 @@ let commands = {
             db.ServerDB.update({ _id: serverID }, {$set: { greeting: x.content }}, (err, newGreet) => {
               if (err) throw err
               let guild = msg.guild
-              if (x.content !== true) return setupMsg.edit({embed: {title: 'Done'}}).then(message => message.delete({timeout: 120000})).catch(console.error)
+              if (x.content !== 'true') return setupMsg.edit({embed: {title: 'Done'}}).then(message => message.delete({timeout: 120000})).catch(console.error)
               try {
                 setupMsg.edit({embed: {title: 'Done'}}).then(message => message.delete({timeout: 120000})).catch(console.error)
                 guild.createChannel('welcome-leave-log', 'text', {
