@@ -112,4 +112,4 @@ client.login(token)
     .catch(console.error)
 
 process.on('unhandledRejection', console.error)
-process.on('exit', () => client.kill())
+process.on('exit', () => client.destroy())
