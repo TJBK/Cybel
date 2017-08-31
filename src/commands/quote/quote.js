@@ -1,0 +1,32 @@
+import request from 'request'
+import toMarkdown from 'to-markdown'
+
+let commands = {
+  name: 'quote',
+  use: '<command>',
+  desc: 'Get random quote',
+  process: async (msg, suffix, client, serverDoc, db, utl) => {
+    request({url: 'http://quotesondesign.com/wp-json/posts'}, async (err, res, json) => {
+      if (err) throw err
+      let embed
+      let quote = JSON.parse(json)
+      console.log(quote)
+
+      console.log(embed)
+      try {
+        msg.delete()
+        msg.channel.send({
+          embed: {
+            title: quote[0].title,
+            description: toMarkdown(quote[0].content),
+            url: quote[0].link
+          }
+        })
+      } catch (err) {
+        msg.channel.send('Fail' + err).then(message => message.delete({timeout: 60000}))
+      }
+    })
+  }
+}
+
+export {commands}

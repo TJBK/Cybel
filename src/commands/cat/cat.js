@@ -8,9 +8,7 @@ let commands = {
     request({url: 'http://random.cat/meow'}, async (err, res, json) => {
       if (err) throw err
       let cat
-      if (!err && res.statusCode === 200) {
-        cat = JSON.parse(json)
-      }
+      if (!err && res.statusCode === 200) cat = JSON.parse(json)
       let embed = {}
       let vid = false
       if (cat.file.indexOf('mp4') !== -1) vid = true
