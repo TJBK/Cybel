@@ -41,12 +41,13 @@ client.on('message', async (msg) => {
   if (msg.author.id !== client.user.id) {
     let f = msg.content.toLowerCase()
     if (f !== 'f') return
-    let img = require('fs').path.join(__dirname) + 'img/respect.jpg'
+    // let img = require('fs').path.join(__dirname) + 'img/respect.jpg'
+    let img = 'https://my.mixtape.moe/rohrdz.jpg'
     msg.channel.send({
       embed: {
         title: 'Paid Your Respects',
         image: {
-          file: img
+          url: img
         }
       }
     }).catch(console.error)
