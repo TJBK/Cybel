@@ -8,11 +8,7 @@ let commands = {
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     request({url: 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1'}, async (err, res, json) => {
       if (err) throw err
-      let embed
       let quote = JSON.parse(json)
-      console.log(quote)
-
-      console.log(embed)
       try {
         msg.delete()
         msg.channel.send({
