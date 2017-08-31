@@ -16,7 +16,7 @@ let commands = {
             description: quote.quoteText,
             url: quote.quoteLink,
             footer: {
-              text: 'Quotes provided by (Forismatic)[http://forismatic.com/]'
+              text: 'Quotes provided by forismatic.com'
             }
           }
         })
