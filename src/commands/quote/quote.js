@@ -1,21 +1,23 @@
 import request from 'request'
-import toMarkdown from 'to-markdown'
 
 let commands = {
   name: 'quote',
   use: '<command>',
   desc: 'Get random quote',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    request({url: 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1'}, async (err, res, json) => {
+    request({url: 'http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en'}, async (err, res, json) => {
       if (err) throw err
       let quote = JSON.parse(json)
       try {
         msg.delete()
         msg.channel.send({
           embed: {
-            title: quote[0].title,
-            description: toMarkdown(quote[0].content),
-            url: quote[0].link
+            title: quote.quoteAuthor,
+            description: quote.quoteText,
+            url: quote.quoteLink,
+            footer: {
+              text: 'Quotes provided by [forismatic](http://forismatic.com/)'
+            }
           }
         })
       } catch (err) {
