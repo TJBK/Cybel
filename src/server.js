@@ -2,6 +2,7 @@ import discord from 'discord.js'
 import {token} from './config.json'
 import * as db from './db.js'
 import * as Mangers from './mangers'
+import {green} from 'chalk'
 
 let client = global.client = exports.client = new discord.Client()
 
@@ -15,10 +16,12 @@ client.mangers.level = new Mangers.LevelManger(client, db)
 client.mangers.server = new Mangers.ServerManger(client, db)
 
 client.on('ready', () => {
-  console.log(`- User: ${client.user.username}#${client.user.discriminator} <ID: ${client.user.id}>
-- Users: ${client.users.size}
-- Channels: ${client.channels.size}
-- Guilds: ${client.guilds.size}`)
+  console.log(`${green('Username:')} ${client.user.username}
+${green('Discriminator:')} ${client.user.discriminator}
+${green('ID:')} ${client.user.id}
+${green('Users:')} ${client.users.size}
+${green('Channels:')} ${client.channels.size}
+${green('Guilds:')} ${client.guilds.size}`)
   client.user.setPresence({
     game: {
       name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
@@ -30,33 +33,13 @@ client.on('ready', () => {
 
 client.on('message', async (msg) => client.mangers.commands.checkMessage(msg))
 
-client.on('guildCreate', (guild) => client.mangers.server.add(guild.id))
+client.on('guildCreate', (guild) => client.mangers.server.addServer(guild.id))
 
-client.on('guildRemove', (guild) => client.mangers.server.delete(guild.id))
+client.on('guildRemove', (guild) => client.mangers.server.deleteServer(guild.id))
 
-client.on('guildMemberAdd', (member) => {
-  let guild = member.guild
-  let serverID = guild.id
-  db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
-    if (err) throw err
-    if (!serverDoc.greeting) return
-    let chID = serverDoc.greetingChannel
-    let channel = guild.channels.get(chID)
-    channel.send('Welcome <@' + member.id + '>. Please read the <#324558902765027328> and make a <#339245304710955010> to be verified. <@&344282081670725634>.')
-  })
-})
+client.on('guildMemberAdd', (member) => client.mangers.server.userJoin(member))
 
-client.on('guildMemberRemove', (member) => {
-  let guild = member.guild
-  let serverID = guild.id
-  db.ServerDB.findOne({ _id: serverID }, async (err, serverDoc) => {
-    if (err) throw err
-    if (!serverDoc.greeting) return
-    let chID = serverDoc.greetingChannel
-    let channel = guild.channels.get(chID)
-    channel.send('Press F to pay respect for ' + member.displayName + '.')
-  })
-})
+client.on('guildMemberRemove', (member) => client.mangers.server.userLeave(member))
 
 client.on('warn', (info) => console.log(info))
 client.on('error', (error) => console.error(error))

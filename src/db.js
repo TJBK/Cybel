@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import {dbName} from './config'
+import {green} from 'chalk'
 
 let mongodbURL = 'mongodb://127.0.0.1:27017/' + dbName
 
@@ -11,9 +12,7 @@ try {
 
 let db = mongoose.connection
 db.on('error', console.info.bind(console, 'connection error:'))
-db.once('open', () => {
-  console.log('DB connected')
-})
+db.once('open', () => console.log('DB ' + green('connected')))
 
 const levelSchema = mongoose.Schema({
   _id: Number,

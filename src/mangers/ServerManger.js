@@ -4,8 +4,8 @@ class ServerManger {
     this.db = db
   }
 
-  add (id) {
-    let db = this._db
+  addServer (id) {
+    let db = this.db
     let server = new db.ServerDB({
       _id: id,
       prefix: '!',
@@ -20,8 +20,32 @@ class ServerManger {
     this.updateStatus()
   }
 
-  delete (id) {
-    let db = this._db
+  userJoin (member) {
+    let db = this.db
+    db.ServerDB.findOne({_id: member.guild.id}, async (err, serverDoc) => {
+      if (err) throw err
+      if (!serverDoc.greeting) return
+      let chID = serverDoc.greetingChannel
+      let channel = member.guild.channels.get(chID)
+      channel.send('Welcome <@' + member.id + '>. Please read the <#324558902765027328> and make a <#339245304710955010> to be verified. <@&344282081670725634>.')
+      this.updateStatus()
+    })
+  }
+
+  userLeave (member) {
+    let db = this.db
+    db.ServerDB.findOne({ _id: member.guild.id }, async (err, serverDoc) => {
+      if (err) throw err
+      if (!serverDoc.greeting) return
+      let chID = serverDoc.greetingChannel
+      let channel = member.guild.channels.get(chID)
+      channel.send('Press F to pay respect for ' + member.displayName + '.')
+      this.updateStatus()
+    })
+  }
+
+  deleteServer (id) {
+    let db = this.db
     db.remove({_id: id}, (err) => { if (err) throw err })
     this.updateStatus()
   }
