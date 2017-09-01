@@ -1,10 +1,17 @@
 import discord from 'discord.js'
 import * as db from './db.js'
 import {token} from './config.json'
-import {loadCMD} from './load.js'
 import * as utl from './utl.js'
+import * as Mangers from './mangers'
 
-let client = new discord.Client()
+let client = global.client = exports.client = new discord.Client()
+
+client.mangers = {}
+
+client.mangers.dimport = new Mangers.DImports(client, __dirname)
+client.mangers.dimport.init()
+
+client.mangers.commands = new Mangers.CommandsManger(client)
 
 client.on('ready', () => {
   console.log(client.user.tag + ' has started trying to login.')
@@ -14,7 +21,7 @@ client.on('ready', () => {
       type: 0
     }
   })
-  loadCMD()
+  client.mangers.commands.load()
 })
 
 client.on('message', async (msg) => {
@@ -22,7 +29,7 @@ client.on('message', async (msg) => {
   let serverID = msg.guild.id
   db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
     if (err) throw err
-    if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) utl.check(client, msg, serverDoc)
+    if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) client.mangers.commands.handle(msg, serverDoc)
     if (serverDoc.level) utl.points(client, userID, msg)
   })
   if (msg.content === 'debugadd') {
@@ -41,7 +48,7 @@ client.on('message', async (msg) => {
   if (msg.author.id !== client.user.id) {
     let f = msg.content.toLowerCase()
     if (f !== 'f') return
-    // let img = require('fs').path.join(__dirname) + 'img/respect.jpg'
+    // let img = require('path').join(__dirname) + '/img/respect.jpg'
     let img = 'https://my.mixtape.moe/rohrdz.jpg'
     msg.channel.send({
       embed: {
