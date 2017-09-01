@@ -30,15 +30,9 @@ client.on('ready', () => {
 
 client.on('message', async (msg) => client.mangers.CommandsManger(msg))
 
-client.on('guildCreate', (guild) => {
-  let id = guild.id
-  client.mangers.server.add(id)
-})
+client.on('guildCreate', (guild) => client.mangers.server.add(guild.id))
 
-client.on('guildRemove', (guild) => {
-  let id = guild.id
-  client.mangers.server.delete(id)
-})
+client.on('guildRemove', (guild) => client.mangers.server.delete(guild.id))
 
 client.on('guildMemberAdd', (member) => {
   let guild = member.guild

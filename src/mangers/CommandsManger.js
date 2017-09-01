@@ -64,10 +64,7 @@ class CommandsManger {
     }
     try {
       msg.delete()
-      msg.channel.send({
-        embed: cms,
-        split: true
-      }).then(message => message.delete({timeout: 60000}))
+      msg.channel.send({embed: cms, split: true}).then(message => message.delete({timeout: 60000}))
     } catch (err) {
       throw err
     }
