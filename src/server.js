@@ -12,6 +12,8 @@ client.mangers.dimport = new Mangers.DImports(client, __dirname)
 client.mangers.dimport.init()
 
 client.mangers.commands = new Mangers.CommandsManger(client)
+client.mangers.level = new Mangers.LevelManger(client, db)
+client.mangers.server = new Mangers.ServerManger(client, db)
 
 client.on('ready', () => {
   console.log(`- User: ${client.user.username}#${client.user.discriminator} <ID: ${client.user.id}>
@@ -33,21 +35,8 @@ client.on('message', async (msg) => {
   db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
     if (err) throw err
     if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) client.mangers.commands.handle(msg, serverDoc)
-    if (serverDoc.level) utl.points(client, userID, msg)
+    if (serverDoc.level) client.mangers.level.add(userID, msg)
   })
-  if (msg.content === 'debugadd') {
-    let server = new db.ServerDB({
-      _id: serverID,
-      prefix: '!',
-      level: false,
-      spam: false,
-      greeting: false,
-      greetingChannel: '',
-      greetingString: 'String',
-      leaveString: 'String'
-    })
-    server.save((err, serverInfo) => { if (err) throw err })
-  }
   if (msg.author.id !== client.user.id) {
     let f = msg.content.toLowerCase()
     if (f !== 'f') return
@@ -66,32 +55,12 @@ client.on('message', async (msg) => {
 
 client.on('guildCreate', (guild) => {
   let id = guild.id
-  let server = new db.ServerDB({
-    _id: id,
-    prefix: '!',
-    level: false,
-    spam: false,
-    greeting: false,
-    greetingChannel: '',
-    greetingString: 'String',
-    leaveString: 'String'
-  })
-  server.save((err, serverInfo) => { if (err) throw err })
-  client.user.setPresence({
-    game: {
-      name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
-      type: 0
-    }
-  })
+  client.mangers.server.add(id)
 })
 
 client.on('guildRemove', (guild) => {
-  client.user.setPresence({
-    game: {
-      name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
-      type: 0
-    }
-  })
+  let id = guild.id
+  client.mangers.server.delete(id)
 })
 
 client.on('guildMemberAdd', (member) => {

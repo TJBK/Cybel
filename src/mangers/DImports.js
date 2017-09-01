@@ -2,8 +2,8 @@ import path from 'path'
 import read from 'readdir-recursive'
 
 class DImports {
-  constructor (bot, base) {
-    this._bot = bot
+  constructor (client, base) {
+    this._client = client
     this._base = base
     this._imports = {}
   }
@@ -12,8 +12,8 @@ class DImports {
     return this._base
   }
 
-  get bot () {
-    return this._bot
+  get client () {
+    return this._client
   }
 
   init () {
@@ -34,10 +34,7 @@ class DImports {
         } catch (err) {
           throw err
         }
-        if (!this._imports[folders]) {
-          this._imports[folders] = {}
-        }
-
+        if (!this._imports[folders]) this._imports[folders] = {}
         this._imports[folders][file] = imported
       })
     } catch (err) {
@@ -47,9 +44,7 @@ class DImports {
 
   getImport (folders) {
     let imported = this._imports[folders]
-    if (!imported) {
-      this.load(folders)
-    }
+    if (!imported) this.load(folders)
     return Object.assign({}, this._imports[folders])
   }
 }

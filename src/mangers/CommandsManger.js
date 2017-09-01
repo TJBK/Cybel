@@ -9,10 +9,8 @@ class CommandsManger {
 
   load () {
     this._commands = []
-
     let client = this.client
     let cmds = client.mangers.dimport.getImport('commands')
-
     Object.keys(cmds).forEach(file => {
       let commands = cmds[file]
       this._commands.push(commands)
@@ -24,30 +22,30 @@ class CommandsManger {
     let cmdtext = msg.content.split(' ')[0].substring(serverDoc.prefix.length).toLowerCase()
     let suffix = msg.content.substring(cmdtext.length + serverDoc.prefix.length + 1)
     let cmd = commands.find(x => x.name === cmdtext)
-    console.log(cmd)
-    if (cmdtext === 'help') {
-      let cms = {
-        title: 'Commands List'
+    if (cmdtext === 'help') this.help(msg, commands, serverDoc)
+    try {
+      cmd.process(msg, suffix, this.client, serverDoc, db, utl)
+    } catch (err) { };
+  }
+
+  help (msg, commands, serverDoc) {
+    let cms = {title: 'Commands List'}
+    cms.fields = []
+    for (let i in commands) {
+      let cmi = {
+        name: '' + serverDoc.prefix + '' + commands[i].name + ' ' + commands[i].use + '',
+        value: commands[i].desc
       }
-      cms.fields = []
-      for (let i in commands) {
-        let cmi = {
-          name: '' + serverDoc.prefix + '' + commands[i].name + ' ' + commands[i].use + '',
-          value: commands[i].desc
-        }
-        cms.fields.push(cmi)
-      }
-      try {
-        msg.delete()
-        msg.channel.send({
-          embed: cms,
-          split: true
-        }).then(message => message.delete({timeout: 60000}))
-      } catch (err) { throw err }
-    } else {
-      try {
-        cmd.process(msg, suffix, this.client, serverDoc, db, utl)
-      } catch (err) { };
+      cms.fields.push(cmi)
+    }
+    try {
+      msg.delete()
+      msg.channel.send({
+        embed: cms,
+        split: true
+      }).then(message => message.delete({timeout: 60000}))
+    } catch (err) {
+      throw err
     }
   }
 }
