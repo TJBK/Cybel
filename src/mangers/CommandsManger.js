@@ -17,6 +17,30 @@ class CommandsManger {
     })
   }
 
+  checkMessage (msg) {
+    let userID = msg.author.id
+    let serverID = msg.guild.id
+    let client = this.client
+    db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
+      if (err) throw err
+      if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) this.handle(msg, serverDoc)
+      if (serverDoc.level) client.mangers.level.add(userID, msg)
+    })
+    if (msg.author.id === client.user.id) return
+    let f = msg.content.toLowerCase()
+    if (f !== 'f') return
+    // let img = require('path').join(__dirname) + '/img/respect.jpg'
+    let img = 'https://my.mixtape.moe/rohrdz.jpg'
+    msg.channel.send({
+      embed: {
+        title: 'Paid Your Respects',
+        image: {
+          url: img
+        }
+      }
+    }).catch(console.error)
+  }
+
   handle (msg, serverDoc) {
     let commands = this._commands
     let cmdtext = msg.content.split(' ')[0].substring(serverDoc.prefix.length).toLowerCase()

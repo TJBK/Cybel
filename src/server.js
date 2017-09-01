@@ -1,7 +1,6 @@
 import discord from 'discord.js'
-import * as db from './db.js'
 import {token} from './config.json'
-import * as utl from './utl.js'
+import * as db from './db.js'
 import * as Mangers from './mangers'
 
 let client = global.client = exports.client = new discord.Client()
@@ -29,29 +28,7 @@ client.on('ready', () => {
   client.mangers.commands.load()
 })
 
-client.on('message', async (msg) => {
-  let userID = msg.author.id
-  let serverID = msg.guild.id
-  db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
-    if (err) throw err
-    if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) client.mangers.commands.handle(msg, serverDoc)
-    if (serverDoc.level) client.mangers.level.add(userID, msg)
-  })
-  if (msg.author.id !== client.user.id) {
-    let f = msg.content.toLowerCase()
-    if (f !== 'f') return
-    // let img = require('path').join(__dirname) + '/img/respect.jpg'
-    let img = 'https://my.mixtape.moe/rohrdz.jpg'
-    msg.channel.send({
-      embed: {
-        title: 'Paid Your Respects',
-        image: {
-          url: img
-        }
-      }
-    }).catch(console.error)
-  }
-})
+client.on('message', async (msg) => client.mangers.CommandsManger(msg))
 
 client.on('guildCreate', (guild) => {
   let id = guild.id
@@ -86,6 +63,9 @@ client.on('guildMemberRemove', (member) => {
     channel.send('Press F to pay respect for ' + member.displayName + '.')
   })
 })
+
+client.on('warn', (info) => console.log(info))
+client.on('error', (error) => console.error(error))
 
 client.login(token)
     .then(tokenA => console.log('Logged in with ' + tokenA + ''))
