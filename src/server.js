@@ -7,27 +7,20 @@ import {green} from 'chalk'
 let client = global.client = exports.client = new discord.Client()
 
 client.mangers = {}
-
 client.mangers.dimport = new Mangers.DImports(client, __dirname)
-client.mangers.dimport.init()
-
+client.mangers.dashboard = new Mangers.DashboardManger(client)
 client.mangers.commands = new Mangers.CommandsManger(client)
 client.mangers.level = new Mangers.LevelManger(client, db)
 client.mangers.server = new Mangers.ServerManger(client, db)
 
 client.on('ready', () => {
-  console.log(`${green('Username:')} ${client.user.username}
-${green('Discriminator:')} ${client.user.discriminator}
-${green('ID:')} ${client.user.id}
-${green('Users:')} ${client.users.size}
-${green('Channels:')} ${client.channels.size}
-${green('Guilds:')} ${client.guilds.size}`)
   client.user.setPresence({
     game: {
       name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
       type: 0
     }
   })
+  client.mangers.dashboard.userInfo()
   client.mangers.commands.load()
 })
 
@@ -45,7 +38,7 @@ client.on('warn', (info) => console.log(info))
 client.on('error', (error) => console.error(error))
 
 client.login(token)
-    .then(tokenA => console.log('Logged in with ' + tokenA + ''))
+    .then(tokenA => console.log('Logged in with ' + green.bold(tokenA) + ''))
     .catch(console.error)
 
 process.on('unhandledRejection', console.error)

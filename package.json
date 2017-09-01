@@ -25,6 +25,7 @@
     "mongoose": "^4.11.9",
     "node-opus": "^0.2.6",
     "node-wit": "^4.3.0",
+    "os-utils": "0.0.14",
     "pm2": "^2.6.1",
     "readdir-recursive": "0.0.4",
     "recursive-readdir": "^2.2.1",
