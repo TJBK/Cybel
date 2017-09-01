@@ -24,7 +24,7 @@ client.on('ready', () => {
   client.mangers.commands.load()
 })
 
-client.on('message', async (msg) => client.mangers.commands.checkMessage(msg))
+client.on('message', (msg) => client.mangers.commands.checkMessage(msg))
 
 client.on('guildCreate', (guild) => client.mangers.server.addServer(guild.id))
 
@@ -34,8 +34,8 @@ client.on('guildMemberAdd', (member) => client.mangers.server.userJoin(member))
 
 client.on('guildMemberRemove', (member) => client.mangers.server.userLeave(member))
 
-client.on('warn', (info) => console.log(info))
-client.on('error', (error) => console.error(error))
+client.on('warn', console.warn)
+client.on('error', console.error)
 
 client.login(token)
     .then(tokenA => console.log('Logged in with ' + green.bold(tokenA) + ''))
