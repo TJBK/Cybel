@@ -26,7 +26,7 @@ class CommandsManger {
       if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) this.handle(msg, serverDoc)
       if (serverDoc.level) client.mangers.level.add(userID, msg)
     })
-    if (msg.author.id !== client.user.id) return
+    if (msg.author.id === client.user.id) return
     let f = msg.content.toLowerCase()
     if (f !== 'f') return
     // let img = require('path').join(__dirname) + '/img/respect.jpg'

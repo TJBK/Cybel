@@ -17,7 +17,7 @@ class LevelManger {
     let db = this._db
     db.LevelDB.findOne({_id: userID}, (err, points) => {
       if (err) throw err
-      if (!points) this.addNewUser(db, points, userID)
+      if (points === null) this.addNewUser(db, points, userID)
       let addP = points.points + 1
       let curLevel = Math.floor(0.1 * Math.sqrt(addP))
       if (curLevel > points.level) {
