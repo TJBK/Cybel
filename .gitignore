@@ -63,3 +63,4 @@ _old/
 config.json
 dist/config.json
 src/config.json
+src/mangers/_ConfigManger.js
