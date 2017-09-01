@@ -28,7 +28,7 @@ client.on('ready', () => {
   client.mangers.commands.load()
 })
 
-client.on('message', async (msg) => client.mangers.checkMessage(msg))
+client.on('message', async (msg) => client.mangers.commands.checkMessage(msg))
 
 client.on('guildCreate', (guild) => client.mangers.server.add(guild.id))
 
