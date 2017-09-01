@@ -14,7 +14,10 @@ client.mangers.dimport.init()
 client.mangers.commands = new Mangers.CommandsManger(client)
 
 client.on('ready', () => {
-  console.log(client.user.tag + ' has started trying to login.')
+  console.log(`- User: ${client.user.username}#${client.user.discriminator} <ID: ${client.user.id}>
+- Users: ${client.users.size}
+- Channels: ${client.channels.size}
+- Guilds: ${client.guilds.size}`)
   client.user.setPresence({
     game: {
       name: 'with ' + client.users.size + ' people across ' + client.guilds.size + ' servers',
