@@ -4,8 +4,8 @@ class LevelManger {
     this._db = db
   }
 
-  addNewUser (db, userID) {
-    let userInfo = new db.LevelDB({
+  addNewUser (userID) {
+    let userInfo = new this._db.LevelDB({
       _id: userID,
       points: 0,
       level: 0
@@ -18,7 +18,7 @@ class LevelManger {
     db.LevelDB.count({_id: userID}, (err, count) => {
       if (err) throw err
       if (count > 0) this.add(msg, userID)
-      this.addNewUser(db, userID)
+      this.addNewUser(userID)
     })
   }
 
