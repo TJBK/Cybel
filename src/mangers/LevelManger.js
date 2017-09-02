@@ -14,7 +14,7 @@ class LevelManger {
   }
 
   checkUser (msg, userID) {
-    let db = this.db
+    let db = this._db
     db.LevelDB.count({_id: userID}, (err, count) => {
       if (err) throw err
       if (count > 0) this.add(msg, userID)
