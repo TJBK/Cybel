@@ -9,7 +9,7 @@ let client = global.client = exports.client = new discord.Client()
 client.mangers = {}
 client.mangers.dimport = new Mangers.DImports(client, __dirname)
 client.mangers.dashboard = new Mangers.DashboardManger(client)
-client.mangers.commands = new Mangers.CommandsManger(client)
+client.mangers.commands = new Mangers.CommandsManger(client, db)
 client.mangers.level = new Mangers.LevelManger(client, db)
 client.mangers.server = new Mangers.ServerManger(client, db)
 

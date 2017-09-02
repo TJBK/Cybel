@@ -1,9 +1,9 @@
-import * as db from './../db.js'
 import * as utl from './../utl.js'
 
 class CommandsManger {
-  constructor (client) {
+  constructor (client, db) {
     this.client = client
+    this.db = db
     this._commands = []
   }
 
@@ -21,10 +21,11 @@ class CommandsManger {
     let userID = msg.author.id
     let serverID = msg.guild.id
     let client = this.client
+    let db = this.db
     db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
       if (err) throw err
       if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) this.handle(msg, serverDoc)
-      if (serverDoc.level) client.mangers.level.add(userID, msg)
+      if (serverDoc.level) client.mangers.level.checkUser(userID, msg)
     })
     if (msg.author.id === client.user.id) return
     let f = msg.content.toLowerCase()
@@ -43,6 +44,7 @@ class CommandsManger {
 
   handle (msg, serverDoc) {
     let commands = this._commands
+    let db = this.db
     let cmdtext = msg.content.split(' ')[0].substring(serverDoc.prefix.length).toLowerCase()
     let suffix = msg.content.substring(cmdtext.length + serverDoc.prefix.length + 1)
     let cmd = commands.find(x => x.name === cmdtext)
