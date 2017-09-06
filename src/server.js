@@ -7,7 +7,7 @@ import {green} from 'chalk'
 let client = global.client = exports.client = new discord.Client()
 
 client.mangers = {}
-client.mangers.dimport = new Mangers.DImports(client, __dirname)
+client.mangers.dimport = new Mangers.ImportManger(client, __dirname)
 client.mangers.dashboard = new Mangers.DashboardManger(client)
 client.mangers.config = new Mangers.ConfigManger(client)
 client.mangers.commands = new Mangers.CommandsManger(client, db)

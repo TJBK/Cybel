@@ -1,7 +1,7 @@
 import path from 'path'
 import read from 'readdir-recursive'
 
-class DImports {
+class ImportManger {
   constructor (client, base) {
     this._client = client
     this._base = base
@@ -17,7 +17,7 @@ class DImports {
   }
 
   init () {
-    DImports.fLoad.forEach(folder => {
+    ImportManger.fLoad.forEach(folder => {
       this.load(folder)
     })
   }
@@ -49,6 +49,6 @@ class DImports {
   }
 }
 
-DImports.fLoad = ['commands']
+ImportManger.fLoad = ['commands']
 
-export {DImports}
+export {ImportManger}

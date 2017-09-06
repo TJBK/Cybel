@@ -3,23 +3,8 @@ let commands = {
   use: '<command> <arg>',
   desc: 'Add something to the bot to be pulled later',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    msg.channel.send('Sorry I am disabled')
-    let disabled = true
-    if (disabled === true) return
-    let user = msg.guild.members.array()
-    let role = msg.guild.roles.array()
-    let abuse = false
-    if (suffix === '@everyone' || suffix === '@here') {
-      abuse = true
-    }
-    for (let i in user) {
-      let users = user[i]
-      if (suffix.includes(users)) abuse = true; break
-    }
-    for (let i in role) {
-      let roles = role[i]
-      if (suffix.includes(roles)) abuse = true; break
-    }
+    let abuse
+    if (msg.mentions) abuse = true
     if (abuse) return msg.reply('Sorry ' + suffix + ' is not allowed')
     try {
       let userID = msg.author.id
@@ -29,10 +14,17 @@ let commands = {
       })
       s.save((s) => {
         msg.delete()
-        msg.channel.send('I have stored ' + suffix + ' congrats').then(message => message.delete({timeout: 60000}))
+        msg.channel.send({embed: {
+          description: 'I have stored ' + suffix + ' congrats'
+        }}).then(message => message.delete({timeout: 60000}))
       })
     } catch (err) {
-      msg.channel.send('Fail' + err).then(message => message.delete({timeout: 60000}))
+      msg.channel.send({embed: {
+        feilds: [{
+          name: 'Fail',
+          value: err
+        }]
+      }}).then(message => message.delete({timeout: 60000}))
     }
   }
 }

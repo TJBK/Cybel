@@ -1,4 +1,4 @@
-export { DImports } from './DImports'
+export { ImportManger } from './ImportManger'
 export { CommandsManger } from './CommandsManger'
 export { LevelManger } from './LevelManger'
 export { ServerManger } from './ServerManger'
