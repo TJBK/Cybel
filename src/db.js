@@ -1,26 +1,26 @@
 import mongoose from 'mongoose'
-import {dbName} from './config'
 import {green} from 'chalk'
 
-let mongodbURL = 'mongodb://127.0.0.1:27017/' + dbName
-
-try {
-  mongoose.connection.openUri(mongodbURL)
-} catch (err) {
-  throw err
+let startDB = (dbName) => {
+  try {
+    let mongodbURL = 'mongodb://127.0.0.1:27017/' + dbName
+    mongoose.connection.openUri(mongodbURL)
+  } catch (err) {
+    throw err
+  }
 }
 
 let db = mongoose.connection
 db.on('error', console.info.bind(console, 'connection error:'))
 db.once('open', () => console.log('DB ' + green('connected')))
 
-const levelSchema = mongoose.Schema({
-  _id: Number,
+let levelSchema = mongoose.Schema({
+  _id: String,
   points: Number,
   level: Number
 })
 
-const serverScheme = mongoose.Schema({
+let serverScheme = mongoose.Schema({
   _id: String,
   prefix: String,
   level: Boolean,
@@ -31,8 +31,8 @@ const serverScheme = mongoose.Schema({
   leaveString: String
 })
 
-const saysSchema = mongoose.Schema({
-  auther: Number,
+let saysSchema = mongoose.Schema({
+  auther: String,
   say: String
 })
 
@@ -40,4 +40,4 @@ let ServerDB = mongoose.model('serverdb', serverScheme)
 let LevelDB = mongoose.model('leveldb', levelSchema)
 let SaysDB = mongoose.model('saysdb', saysSchema)
 
-export {ServerDB, LevelDB, SaysDB}
+export {startDB, ServerDB, LevelDB, SaysDB}

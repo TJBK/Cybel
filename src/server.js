@@ -1,7 +1,7 @@
 import discord from 'discord.js'
-import {token} from './config.json'
-import * as db from './db.js'
+import * as db from './db'
 import * as Mangers from './mangers'
+import {initUtl} from './utl'
 import {green} from 'chalk'
 
 let client = global.client = exports.client = new discord.Client()
@@ -9,9 +9,12 @@ let client = global.client = exports.client = new discord.Client()
 client.mangers = {}
 client.mangers.dimport = new Mangers.DImports(client, __dirname)
 client.mangers.dashboard = new Mangers.DashboardManger(client)
+client.mangers.config = new Mangers.ConfigManger(client)
 client.mangers.commands = new Mangers.CommandsManger(client, db)
 client.mangers.level = new Mangers.LevelManger(client, db)
 client.mangers.server = new Mangers.ServerManger(client, db)
+
+let config
 
 client.on('ready', () => {
   client.user.setPresence({
@@ -37,9 +40,20 @@ client.on('guildMemberRemove', (member) => client.mangers.server.userLeave(membe
 client.on('warn', console.warn)
 client.on('error', console.error)
 
-client.login(token)
+let login = () => {
+  client.login(config.token)
     .then(tokenA => console.log('Logged in with ' + green.bold(tokenA) + ''))
     .catch(console.error)
+}
+
+try {
+  config = require('./config')
+  login()
+  initUtl()
+  db.startDB(config.dbName)
+} catch (err) {
+  client.mangers.config.GetConfig()
+}
 
 process.on('unhandledRejection', console.error)
 process.on('exit', () => client.destroy())

@@ -9,7 +9,6 @@
     "bg": "screen -dmS antidenjo npm run start",
     "start": "node dist/server.js",
     "win": "start.bat",
-    "int-lin": "./dist/setup.js",
     "pn2": "pm2 start npm run start",
     "standard": "standard ./src"
   },
@@ -23,7 +22,6 @@
     "mongoose": "^4.11.9",
     "os-utils": "0.0.14",
     "pm2": "^2.6.1",
-    "prompt": "^1.0.0",
     "readdir-recursive": "0.0.4",
     "request": "^2.81.0",
     "to-markdown": "^3.1.0"

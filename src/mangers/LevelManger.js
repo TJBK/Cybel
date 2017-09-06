@@ -5,7 +5,8 @@ class LevelManger {
   }
 
   addNewUser (userID) {
-    let userInfo = new this._db.LevelDB({
+    let db = this._db
+    let userInfo = new db.LevelDB({
       _id: userID,
       points: 0,
       level: 0
@@ -15,10 +16,11 @@ class LevelManger {
 
   checkUser (msg, userID) {
     let db = this._db
-    db.LevelDB.count({_id: userID}, (err, count) => {
+    db.LevelDB.findOne({_id: userID}, (err, points) => {
       if (err) throw err
-      if (count > 0) this.add(msg, userID)
-      this.addNewUser(userID)
+      console.log(points)
+      if (!points) this.addNewUser(userID)
+      if (points) this.add(msg, userID)
     })
   }
 
@@ -28,6 +30,7 @@ class LevelManger {
       if (err) throw err
       let addP = points.points + 1
       let curLevel = Math.floor(0.1 * Math.sqrt(addP))
+      console.log(addP, curLevel, points.level)
       if (curLevel > points.level) {
         msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn')
             .then(message => message.delete({timeout: 60000})).catch(console.error)

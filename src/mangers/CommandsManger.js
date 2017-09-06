@@ -25,7 +25,7 @@ class CommandsManger {
     db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
       if (err) throw err
       if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) this.handle(msg, serverDoc)
-      if (serverDoc.level) client.mangers.level.checkUser(userID, msg)
+      if (serverDoc.level) client.mangers.level.checkUser(msg, userID)
     })
     if (msg.author.id === client.user.id) return
     let f = msg.content.toLowerCase()

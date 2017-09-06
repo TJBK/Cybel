@@ -14,7 +14,7 @@ Just run the bat file
 ### Linux
 ```
 npm install
-npm run int-lin
+npm run build
 npm run bg
 ```
 
