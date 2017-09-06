@@ -5,7 +5,7 @@
 
 ## Installation
 
-### Requirements
+### Recommended
 pm2
 
 ### Windows
