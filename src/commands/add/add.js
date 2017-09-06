@@ -3,7 +3,7 @@ let commands = {
   use: '<command> <arg>',
   desc: 'Add something to the bot to be pulled later',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    let abuse
+    let abuse = false
     if (msg.mentions) abuse = true
     if (abuse) return msg.reply('Sorry ' + suffix + ' is not allowed')
     try {
