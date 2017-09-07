@@ -7,7 +7,7 @@ let commands = {
       msg.channel.send({
         embed: {
           title: 'Info about me :3',
-          description: 'I\'m a open source bot, you can find me at [GitHub](https://github.com/TJBK/antiDenjo)',
+          description: 'I\'m a open source bot, you can find me at [GitHub](https://github.com/TJBK/Cybel)',
           fields: [{
             name: 'Creater',
             value: 'I was made with :heart: by TJBK#6368',
