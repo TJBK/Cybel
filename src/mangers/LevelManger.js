@@ -18,7 +18,6 @@ class LevelManger {
     let db = this._db
     db.LevelDB.findOne({_id: userID}, (err, points) => {
       if (err) throw err
-      console.log(points)
       if (!points) this.addNewUser(userID)
       if (points) this.add(msg, userID)
     })
@@ -30,7 +29,6 @@ class LevelManger {
       if (err) throw err
       let addP = points.points + 1
       let curLevel = Math.floor(0.1 * Math.sqrt(addP))
-      console.log(addP, curLevel, points.level)
       if (curLevel > points.level) {
         msg.reply('Woop Level Up ' + curLevel + '! *Insert FF level up sound* - Cn')
             .then(message => message.delete({timeout: 60000})).catch(console.error)
