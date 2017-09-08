@@ -5,6 +5,10 @@
 
 ## Installation
 
+### Requirements
+Node JS 8.x
+MongoDB
+
 ### Recommended
 pm2
 
