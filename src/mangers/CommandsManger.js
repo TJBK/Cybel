@@ -22,21 +22,24 @@ class CommandsManger {
     let serverID = msg.guild.id
     let client = this.client
     let db = this.db
+    if (msg.author.id === client.user.id) return
     db.ServerDB.findOne({_id: serverID}, async (err, serverDoc) => {
       if (err) throw err
-      if (msg.author.id !== client.user.id && (msg.content.startsWith(serverDoc.prefix))) this.handle(msg, serverDoc)
+      if (!serverDoc) client.mangers.server.addServer(serverID)
+      if (msg.content.startsWith(serverDoc.prefix)) this.handle(msg, serverDoc)
       if (serverDoc.level) client.mangers.level.checkUser(msg, userID)
     })
-    if (msg.author.id === client.user.id) return
     let f = msg.content.toLowerCase()
     if (f !== 'f') return
-    // let img = require('path').join(__dirname) + '/img/respect.jpg'
-    let img = 'https://my.mixtape.moe/rohrdz.jpg'
+    // Looks like Image upload is still broken.
+    // let imgPath = require('path').resolve(this.client.mangers.dimport._base, 'img')
+    // let img = require('readdir-recursive').fileSync(imgPath)
+    let imgURL = 'https://my.mixtape.moe/rohrdz.jpg'
     msg.channel.send({
       embed: {
-        title: 'Paid Your Respects',
+        title: 'Paid Your Respects D',
         image: {
-          url: img
+          url: imgURL
         }
       }
     }).catch(console.error)

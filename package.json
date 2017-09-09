@@ -4,8 +4,8 @@
   "description": "A not very cool bot built on discord.js",
   "main": "server.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/TJBK/Cybel.git"
+    "type": "git",
+    "url": "https://github.com/TJBK/Cybel.git"
   },
   "scripts": {
     "debug-start": "nodemon ./src/server.js --exec babel-node --presets es2015,stage-2",
