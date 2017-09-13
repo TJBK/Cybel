@@ -23,12 +23,24 @@ let commands = {
     }
 
     let noSuf = () => {
+      let cmds = ['admin', 'fun', 'useful']
+      let embed = {
+        title: 'You want help do you now?',
+        description: 'Well then pick a category, !help <category>'
+      }
+      embed.fields = []
+      for (let i in cmds) {
+        let cmi = {
+          name: cmds[i],
+          value: '\u200B',
+          inline: true
+        }
+        embed.fields.push(cmi)
+      }
+
       try {
         msg.delete()
-        msg.channel.send({embed: {
-          title: 'You want help now?',
-          description: 'Pick one of these fun, useful and admin'
-        }}).then(message => message.delete({timeout: 60000}))
+        msg.channel.send({embed: embed}).then(message => message.delete({timeout: 60000}))
       } catch (err) {
         throw err
       }
