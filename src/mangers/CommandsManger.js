@@ -15,6 +15,7 @@ class CommandsManger {
       let commands = cmds[file]
       this._commands.push(commands)
     })
+    client.commands = this._commands
   }
 
   checkMessage (msg) {
@@ -51,7 +52,7 @@ class CommandsManger {
     let cmdtext = msg.content.split(' ')[0].substring(serverDoc.prefix.length).toLowerCase()
     let suffix = msg.content.substring(cmdtext.length + serverDoc.prefix.length + 1)
     let cmd = commands.find(x => x.name === cmdtext)
-    if (cmdtext === 'help') this.help(msg, commands, serverDoc)
+    // if (cmdtext === 'help') this.help(msg, commands, serverDoc)
     try {
       cmd.process(msg, suffix, this.client, serverDoc, db, utl)
     } catch (err) { };
