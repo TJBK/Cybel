@@ -28,4 +28,4 @@ let commands = {
   }
 }
 
-export {commands}
+export { commands }

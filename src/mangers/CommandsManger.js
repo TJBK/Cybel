@@ -77,4 +77,4 @@ class CommandsManger {
   }
 }
 
-export {CommandsManger}
+export { CommandsManger }

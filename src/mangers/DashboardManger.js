@@ -1,5 +1,5 @@
 import os from 'os-utils'
-import {green} from 'chalk'
+import { green } from 'chalk'
 
 class DashboardManger {
   constructor (client) {
@@ -32,4 +32,4 @@ ${green('Guilds:')} ${client.guilds.size}`)
   }
 }
 
-export {DashboardManger}
+export { DashboardManger }

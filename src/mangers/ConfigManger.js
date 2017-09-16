@@ -66,4 +66,4 @@ class ConfigManger {
   }
 }
 
-export {ConfigManger}
+export { ConfigManger }

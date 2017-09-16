@@ -1,12 +1,10 @@
 let commands = {
-  name: 'add',
+  name: 'addd',
   category: 'fun',
   use: '<command> <arg>',
   desc: 'Add something to the bot to be pulled later',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    let abuse = false
-    if (msg.mentions) abuse = true
-    if (abuse) return msg.reply('Sorry ' + suffix + ' is not allowed')
+    if (/[^<>@]/g.test(msg.content)) return msg.reply('Sorry ' + suffix + ' is not allowed')
     try {
       let userID = msg.author.id
       let s = new db.SaysDB({
@@ -30,4 +28,4 @@ let commands = {
   }
 }
 
-export {commands}
+export { commands }

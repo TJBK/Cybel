@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import * as schemas from './databaseSchema/index'
 import {green} from 'chalk'
 
 let startDB = (dbName) => {
@@ -14,30 +15,8 @@ let db = mongoose.connection
 db.on('error', console.info.bind(console, 'connection error:'))
 db.once('open', () => console.log('DB ' + green('connected')))
 
-let levelSchema = mongoose.Schema({
-  _id: String,
-  points: Number,
-  level: Number
-})
-
-let serverScheme = mongoose.Schema({
-  _id: String,
-  prefix: String,
-  level: Boolean,
-  spam: Boolean,
-  greeting: Boolean,
-  greetingChannel: String,
-  greetingString: String,
-  leaveString: String
-})
-
-let saysSchema = mongoose.Schema({
-  auther: String,
-  say: String
-})
-
-let ServerDB = mongoose.model('serverdb', serverScheme)
-let LevelDB = mongoose.model('leveldb', levelSchema)
-let SaysDB = mongoose.model('saysdb', saysSchema)
+let ServerDB = mongoose.model('serverdb', schemas.serverScheme)
+let LevelDB = mongoose.model('leveldb', schemas.levelSchema)
+let SaysDB = mongoose.model('saysdb', schemas.saysSchema)
 
 export {startDB, ServerDB, LevelDB, SaysDB}

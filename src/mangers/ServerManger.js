@@ -60,4 +60,4 @@ class ServerManger {
   }
 }
 
-export {ServerManger}
+export { ServerManger }

@@ -40,4 +40,4 @@ class LevelManger {
   }
 }
 
-export {LevelManger}
+export { LevelManger }

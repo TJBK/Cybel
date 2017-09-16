@@ -1,6 +1,6 @@
 let commands = {
   name: 'level',
-  category: 'useful',  
+  category: 'useful',
   use: '<command>',
   desc: 'Check what your level is',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
@@ -27,4 +27,4 @@ let commands = {
   }
 }
 
-export {commands}
+export { commands }

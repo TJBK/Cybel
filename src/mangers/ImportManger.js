@@ -51,4 +51,4 @@ class ImportManger {
 
 ImportManger.fLoad = ['commands']
 
-export {ImportManger}
+export { ImportManger }
