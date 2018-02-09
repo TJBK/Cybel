@@ -1,5 +1,5 @@
 let commands = {
-  name: 'addd',
+  name: 'add',
   category: 'fun',
   use: '<command> <arg>',
   desc: 'Add something to the bot to be pulled later',

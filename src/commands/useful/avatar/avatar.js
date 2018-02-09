@@ -6,7 +6,6 @@ let commands = {
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     let mention = msg.mentions.users.first()
     let av = mention.avatarURL({
-      format: 'png',
       size: 2048
     })
     try {

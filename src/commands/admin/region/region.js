@@ -8,7 +8,6 @@ let commands = {
     if (continents.indexOf(msg.content) !== -1) return msg.channel.send('Sorry that not allowed fam')
     let gRCountry = await msg.guild.roles.find('name', suffix).id
     let roles = [gRCountry]
-    console.log(roles)
     msg.delete()
     try {
       msg.member.addRoles(roles)
