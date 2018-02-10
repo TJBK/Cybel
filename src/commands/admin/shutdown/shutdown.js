@@ -9,7 +9,7 @@ let commands = {
       msg.channel.send('Shutting down bye bye :C')
       process.exit()
     } catch (err) {
-      msg.channel.send('Well, this is weird, I failed to shut down I guess the gods don\'t want me gone today')
+      utl.error(msg, err)
     }
   }
 }

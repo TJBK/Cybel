@@ -10,7 +10,7 @@ let commands = {
     try {
       msg.channel.messages.fetch({ limit: deleteCount }).then(messages => msg.channel.bulkDelete(messages))
     } catch (err) {
-      msg.channel.send('Fail' + err).then(message => message.delete({timeout: 60000}))
+      utl.error(msg, err)
     }
   }
 }

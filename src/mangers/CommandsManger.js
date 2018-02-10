@@ -38,7 +38,7 @@ class CommandsManger {
     let imgURL = 'https://my.mixtape.moe/rohrdz.jpg'
     msg.channel.send({
       embed: {
-        title: 'Paid Your Respects D',
+        title: 'Paid Your Respects',
         image: {
           url: imgURL
         }

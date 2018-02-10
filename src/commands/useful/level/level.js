@@ -22,7 +22,7 @@ let commands = {
         msg.reply('You\'re **level ' + result.level + '**').then(message => message.delete({timeout: 60000}))
       })
     } catch (err) {
-      msg.channel.send('Fail' + err).then(message => message.delete({timeout: 60000}))
+      utl.error(msg, err)
     }
   }
 }

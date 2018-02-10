@@ -50,8 +50,8 @@ let commands = {
               }
             })
           } catch (err) {
-            msgObject.edit('Fail' + err)
-            msgObject.delete({timeout: 60000})
+            utl.error(msg, err)
+            msgObject.delete()
           }
         }
       })

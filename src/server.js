@@ -1,8 +1,8 @@
 import discord from 'discord.js'
 import * as db from './db'
 import * as Mangers from './mangers'
-import {initUtl} from './utl'
-import {green} from 'chalk'
+import { initUtl } from './utl'
+import { green } from 'chalk'
 
 let client = global.client = exports.client = new discord.Client()
 
@@ -23,7 +23,7 @@ client.on('ready', () => {
       type: 0
     }
   })
-  client.mangers.dashboard.userInfo()
+  client.mangers.dashboard.info()
   client.mangers.commands.load()
 })
 

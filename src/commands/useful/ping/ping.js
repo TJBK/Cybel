@@ -3,7 +3,7 @@ let commands = {
   category: 'useful',
   use: '<command>',
   desc: 'Check Latency',
-  process: async (msg, suffix, client) => {
+  process: async (msg, suffix, client, serverDoc, db, utl) => {
     let lat = new Date().getTime() - msg.createdTimestamp
     try {
       msg.delete()
@@ -23,7 +23,7 @@ let commands = {
         }
       }).then(message => message.delete({timeout: 60000}))
     } catch (err) {
-      msg.channel.send('Fail' + err).then(message => message.delete({timeout: 60000}))
+      utl.error(msg, err)
     }
   }
 }

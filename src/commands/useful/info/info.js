@@ -37,7 +37,7 @@ let commands = {
       }).then(message => message.delete({timeout: 120000}))
       msg.delete()
     } catch (err) {
-      msg.channel.send('Fail' + err).then(message => message.delete({timeout: 60000}))
+      utl.error(msg, err)
     }
   }
 }

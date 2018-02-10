@@ -18,12 +18,7 @@ let commands = {
         }}).then(message => message.delete({timeout: 60000}))
       })
     } catch (err) {
-      msg.channel.send({embed: {
-        feilds: [{
-          name: 'Fail',
-          value: err
-        }]
-      }}).then(message => message.delete({timeout: 60000}))
+      utl.error(msg, err)
     }
   }
 }

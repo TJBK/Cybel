@@ -22,4 +22,12 @@ export let isNSFW = (channel) => {
   return channel.nsfw
 }
 
-export {initUtl}
+export let error = (msg, err) => {
+  msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``, {split: true}).then(message => message.delete({timeout: 60000})).catch(console.error)
+}
+
+export let clean = (text) => {
+  if (typeof (text) === 'string') { return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203)) } else { return text }
+}
+
+export { initUtl }

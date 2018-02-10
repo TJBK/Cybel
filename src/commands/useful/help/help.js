@@ -34,7 +34,7 @@ let commands = {
     try {
       msg.channel.send({ embed: embed }).then(message => message.delete({ timeout: 60000 }))
     } catch (err) {
-      throw err
+      utl.error(msg, err)
     }
   }
 }
