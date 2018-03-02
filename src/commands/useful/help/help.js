@@ -22,7 +22,7 @@ let commands = {
         cms.fields.push(cmi)
       }
       try {
-        msg.channel.send({ embed: cms, split: true }).then(message => message.delete({ timeout: 60000 }))
+        msg.channel.send({ embed: cms, split: true }).then(m => utl.deleteMsg(m))
       } catch (err) {
         throw err
       }
@@ -32,7 +32,7 @@ let commands = {
       description: 'Just type one of these: admin, fun, useful'
     }
     try {
-      msg.channel.send({ embed: embed }).then(message => message.delete({ timeout: 60000 }))
+      msg.channel.send({ embed: embed }).then(m => utl.deleteMsg(m))
     } catch (err) {
       utl.error(msg, err)
     }

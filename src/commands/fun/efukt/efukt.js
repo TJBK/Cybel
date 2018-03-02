@@ -6,7 +6,7 @@ let commands = {
   name: 'efukt',
   category: 'fun',
   use: '<command>',
-  desc: 'Get\'s a random video from efukt',
+  desc: 'Get"s a random video from efukt',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     if (!utl.isNSFW(msg.channel)) return msg.reply('This can only be used in NSFW channels')
     let url = 'http://efukt.com/random.php'

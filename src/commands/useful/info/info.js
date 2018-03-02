@@ -9,7 +9,7 @@ let commands = {
       msg.channel.send({
         embed: {
           title: 'Info about me :3',
-          description: 'I\'m a open source bot, you can find me at [GitHub](https://github.com/TJBK/Cybel)',
+          description: 'I"m a open source bot, you can find me at [GitHub](https://github.com/TJBK/Cybel)',
           fields: [{
             name: 'Creater',
             value: 'I was made with :heart: by TJBK#6368',
@@ -17,12 +17,12 @@ let commands = {
           },
           {
             name: 'Language',
-            value: 'I\'m running on ' + process.version + ' of NodeJS',
+            value: 'I"m running on ' + process.version + ' of NodeJS',
             inline: true
           },
           {
             name: 'Framework',
-            value: 'I\'m made with the master branch of [discord.js](https://discord.js.org/#/)',
+            value: 'I"m made with the master branch of [discord.js](https://discord.js.org/#/)',
             inline: true
           },
           {
@@ -34,7 +34,7 @@ let commands = {
             text: 'To find a full list of all my commands just do ' + serverDoc.prefix + 'help'
           }
         }
-      }).then(message => message.delete({timeout: 120000}))
+      }).then(m => utl.deleteMsg(m))
       msg.delete()
     } catch (err) {
       utl.error(msg, err)

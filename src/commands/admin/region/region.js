@@ -1,3 +1,5 @@
+// Legacy will be removed at some point
+
 let commands = {
   name: 'region',
   category: 'admin',
@@ -12,7 +14,7 @@ let commands = {
     try {
       msg.member.addRoles(roles)
     } catch (err) {
-      msg.channel.send('You either have this region or try adding a captial letter').then(message => message.delete({timeout: 60000})).catch(console.error)
+      msg.channel.send('You either have this region or try adding a captial letter').then(m => utl.deleteMsg(m))
     }
   }
 }

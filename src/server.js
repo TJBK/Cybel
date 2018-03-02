@@ -1,20 +1,19 @@
 import discord from 'discord.js'
 import * as db from './db'
 import * as Mangers from './mangers'
-import { initUtl } from './utl'
+import config from './config.json'
 import { green } from 'chalk'
 
-let client = global.client = exports.client = new discord.Client()
+let client = new discord.Client()
 
 client.mangers = {}
 client.mangers.dimport = new Mangers.ImportManger(client, __dirname)
 client.mangers.dashboard = new Mangers.DashboardManger(client)
 client.mangers.config = new Mangers.ConfigManger(client)
+client.mangers.utl = new Mangers.UtlManger(client, db, config)
 client.mangers.commands = new Mangers.CommandsManger(client, db)
 client.mangers.level = new Mangers.LevelManger(client, db)
 client.mangers.server = new Mangers.ServerManger(client, db)
-
-let config
 
 client.on('ready', () => {
   client.user.setPresence({
@@ -47,9 +46,7 @@ let login = () => {
 }
 
 try {
-  config = require('./config')
   login()
-  initUtl()
   db.startDB(config.dbName)
 } catch (err) {
   client.mangers.config.GetConfig()

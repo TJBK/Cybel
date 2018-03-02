@@ -16,10 +16,10 @@ let commands = {
           })
           userInfo.save((userInfo) => {})
           msg.delete()
-          msg.reply('You did not have a entry in the DB').then(message => message.delete({timeout: 60000}))
+          msg.reply('You did not have a entry in the DB').then(m => utl.deleteMsg(m))
         }
         msg.delete()
-        msg.reply('You\'re **level ' + result.level + '**').then(message => message.delete({timeout: 60000}))
+        msg.reply('You"re **level ' + result.level + '**').then(m => utl.deleteMsg(m))
       })
     } catch (err) {
       utl.error(msg, err)

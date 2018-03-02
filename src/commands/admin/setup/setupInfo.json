@@ -1,0 +1,88 @@
+{
+  "init": {
+    "title": "Setup",
+    "fields": [
+      {
+        "name": "level",
+        "value": "Choose to enable the level system",
+        "inline": true
+      },
+      {
+        "name": "spam",
+        "value": "Choose to enable the spam system",
+        "inline": true
+      },
+      {
+        "name": "delete",
+        "value": "Choose to enable the bot self message delete",
+        "inline": true
+      },
+      {
+        "name": "prefix",
+        "value": "Choose your prefix",
+        "inline": true
+      }
+    ],
+    "footer": {
+      "text": "Type what you want to setup up"
+    }
+  },
+  "level": {
+    "title": "Options",
+    "fields": [
+      {
+        "name": "true",
+        "value": "Enable level system",
+        "inline": false
+      },
+      {
+        "name": "false",
+        "value": "Disable level system",
+        "inline": false
+      }
+    ],
+    "footer": {
+      "text": "Type true or false"
+    }
+  },
+  "spam": {
+    "title": "Options",
+    "fields": [
+      {
+        "name": "true",
+        "value": "Enable spam system",
+        "inline": false
+      },
+      {
+        "name": "false",
+        "value": "Disable spam system",
+        "inline": false
+      }
+    ],
+    "footer": {
+      "text": "Type true or false"
+    }
+  },
+  "delete": {
+    "title": "Options",
+    "fields": [
+      {
+        "name": "true",
+        "value": "Enable delete system",
+        "inline": false
+      },
+      {
+        "name": "false",
+        "value": "Disable delete system",
+        "inline": false
+      }
+    ],
+    "footer": {
+      "text": "Type true or false"
+    }
+  },
+  "prefix": {
+    "title": "Options",
+    "description": "Type your new prefix"
+  }
+}

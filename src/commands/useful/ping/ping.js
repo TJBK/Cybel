@@ -21,7 +21,7 @@ let commands = {
           }],
           timestamp: new Date()
         }
-      }).then(message => message.delete({timeout: 60000}))
+      }).then(m => utl.deleteMsg(m))
     } catch (err) {
       utl.error(msg, err)
     }

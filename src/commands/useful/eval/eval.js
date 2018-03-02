@@ -4,7 +4,7 @@ let commands = {
   use: '<command> <code>',
   desc: 'Execute JS code',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    if (!utl.isEval(msg.member)) return msg.reply('Sorry you don\'t have perms for that').then(message => message.delete({timeout: 60000})).catch(console.error)
+    if (!utl.isEval(msg.member)) return msg.reply('Sorry you don"t have perms for that').then(message => message.delete({timeout: 60000})).catch(console.error)
     let evaled = eval(suffix)
     if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
     try {
@@ -19,7 +19,7 @@ let commands = {
             value: utl.clean(evaled)
           }]
         }
-      }).then(message => message.delete({timeout: 120000}))
+      }).then(m => utl.deleteMsg(m))
       msg.delete()
     } catch (err) {
       utl.error(msg, err)
