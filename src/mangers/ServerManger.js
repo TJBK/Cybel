@@ -6,18 +6,19 @@ class ServerManger {
 
   addServer (id) {
     let db = this.db
-    let server = new db.ServerDB({
-      _id: id,
-      prefix: '!',
-      level: false,
-      spam: false,
-      greeting: false,
-      greetingChannel: '',
-      greetingString: 'String',
-      leaveString: 'String'
+    db.ServerDB.findOne({ _id: id }, async (err, serverDoc) => {
+      if (err) throw err
+      if (serverDoc) return
+      let server = new db.ServerDB({
+        _id: id,
+        prefix: '!',
+        level: false,
+        delete: true,
+        spam: false
+      })
+      server.save((err, serverInfo) => { if (err) throw err })
+      this.updateStatus()
     })
-    server.save((err, serverInfo) => { if (err) throw err })
-    this.updateStatus()
   }
 
   userJoin (member) {
@@ -42,12 +43,6 @@ class ServerManger {
       channel.send('Press F to pay respect for ' + member.displayName + '.')
       this.updateStatus()
     })
-  }
-
-  deleteServer (id) {
-    let db = this.db
-    db.remove({_id: id}, (err) => { if (err) throw err })
-    this.updateStatus()
   }
 
   updateStatus () {

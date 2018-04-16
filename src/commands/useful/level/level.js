@@ -15,14 +15,12 @@ let commands = {
             level: 0
           })
           userInfo.save((userInfo) => {})
-          msg.delete()
-          msg.reply('You did not have a entry in the DB').then(m => utl.deleteMsg(m))
+          utl.sendMsg(msg, 'You did not have a entry in the DB')
         }
-        msg.delete()
-        msg.reply('You"re **level ' + result.level + '**').then(m => utl.deleteMsg(m))
+        utl.sendMsg(msg, 'You"re **level ' + result.level + '**')
       })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

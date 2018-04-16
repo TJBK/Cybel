@@ -6,7 +6,7 @@ let commands = {
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     try {
       let link = await client.generateInvite(473033745)
-      msg.channel.send({
+      utl.sendMsg(msg, {
         embed: {
           title: 'Info about me :3',
           description: 'I"m a open source bot, you can find me at [GitHub](https://github.com/TJBK/Cybel)',
@@ -34,10 +34,9 @@ let commands = {
             text: 'To find a full list of all my commands just do ' + serverDoc.prefix + 'help'
           }
         }
-      }).then(m => utl.deleteMsg(m))
-      msg.delete()
+      })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

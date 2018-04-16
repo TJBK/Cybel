@@ -2,18 +2,18 @@ class CommandsManger {
   constructor (client, db) {
     this.client = client
     this.db = db
-    this._commands = []
+    this.commands = []
   }
 
   load () {
-    this._commands = []
+    this.commands = []
     let client = this.client
     let cmds = client.mangers.dimport.getImport('commands')
     Object.keys(cmds).forEach(file => {
-      let commands = cmds[file]
-      this._commands.push(commands)
+      let addCommands = cmds[file]
+      this.commands.push(addCommands)
     })
-    client.commands = this._commands
+    client.commands = this.commands
   }
 
   checkMessage (msg) {
@@ -31,14 +31,16 @@ class CommandsManger {
   }
 
   handle (msg, serverDoc) {
-    let commands = this._commands
+    let commands = this.commands
     let db = this.db
     let cmdtext = msg.content.split(' ')[0].substring(serverDoc.prefix.length).toLowerCase()
     let suffix = msg.content.substring(cmdtext.length + serverDoc.prefix.length + 1)
     let cmd = commands.find(x => x.name === cmdtext)
     try {
       cmd.process(msg, suffix, this.client, serverDoc, db, this.client.mangers.utl)
-    } catch (err) {}
+    } catch (err) {
+      // This is throw when it can't find the command
+    }
   }
 }
 

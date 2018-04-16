@@ -10,8 +10,7 @@ let commands = {
       let skipCount = Math.floor(Math.random() * count)
       db.SaysDB.find({}).skip(skipCount).limit(1).exec(async (err, docs) => {
         if (err) throw err
-        msg.delete().catch(console.error)
-        msg.channel.send(docs[0].say).catch(console.error)
+        utl.sendMsg(msg, docs[0].say)
       })
     })
   }

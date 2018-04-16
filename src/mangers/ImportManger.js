@@ -3,17 +3,9 @@ import read from 'readdir-recursive'
 
 class ImportManger {
   constructor (client, base) {
-    this._client = client
-    this._base = base
-    this._imports = {}
-  }
-
-  get base () {
-    return this._base
-  }
-
-  get client () {
-    return this._client
+    this.client = client
+    this.base = base
+    this.imports = {}
   }
 
   init () {
@@ -23,7 +15,7 @@ class ImportManger {
   }
 
   load (folders) {
-    let folder = path.resolve(this._base, folders)
+    let folder = path.resolve(this.base, folders)
     try {
       read.fileSync(folder).forEach(file => {
         let basename = path.basename(file)
@@ -34,8 +26,8 @@ class ImportManger {
         } catch (err) {
           throw err
         }
-        if (!this._imports[folders]) this._imports[folders] = {}
-        this._imports[folders][file] = imported
+        if (!this.imports[folders]) this.imports[folders] = {}
+        this.imports[folders][file] = imported
       })
     } catch (err) {
       throw err
@@ -43,9 +35,9 @@ class ImportManger {
   }
 
   getImport (folders) {
-    let imported = this._imports[folders]
+    let imported = this.imports[folders]
     if (!imported) this.load(folders)
-    return Object.assign({}, this._imports[folders])
+    return Object.assign({}, this.imports[folders])
   }
 }
 

@@ -6,8 +6,7 @@ let commands = {
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     let lat = new Date().getTime() - msg.createdTimestamp
     try {
-      msg.delete()
-      msg.channel.send({
+      utl.sendMsg(msg, {
         embed: {
           fields: [{
             name: 'Bot Latency',
@@ -21,9 +20,9 @@ let commands = {
           }],
           timestamp: new Date()
         }
-      }).then(m => utl.deleteMsg(m))
+      })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

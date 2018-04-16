@@ -15,10 +15,9 @@ let commands = {
       }
     }
     try {
-      msg.delete()
-      msg.channel.send({embed: embed})
+      utl.sendMsg(msg, { embed })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

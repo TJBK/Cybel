@@ -24,8 +24,13 @@ class UtlManger {
     return channel.nsfw
   }
 
-  error (msg, err) {
+  sendError (msg, err) {
     msg.channel.send(`\`ERROR\` \`\`\`xl\n${this.clean(err)}\n\`\`\``, {split: true}).then(m => this.deleteMsg(m))
+  }
+
+  sendMsg (msg, message) {
+    msg.channel.send(message).then(m => this.deleteMsg(m))
+    msg.delete()
   }
 
   deleteMsg (msg) {

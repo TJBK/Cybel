@@ -8,7 +8,7 @@ let commands = {
     let evaled = eval(suffix)
     if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
     try {
-      msg.channel.send({
+      utl.sendMsg(msg, {
         embed: {
           fields: [{
             name: ':inbox_tray: Input',
@@ -19,10 +19,9 @@ let commands = {
             value: utl.clean(evaled)
           }]
         }
-      }).then(m => utl.deleteMsg(m))
-      msg.delete()
+      })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

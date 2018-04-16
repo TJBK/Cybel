@@ -6,19 +6,22 @@ let commands = {
   use: '<command>',
   desc: 'Get a random cat pic/vid',
   process: async (msg, suffix, client, serverDoc, db, utl) => {
-    let image = await axios.get('http://random.cat/meow')
-    let embed
-    embed = {
+    let image
+    try {
+      image = await axios.get('https://aws.random.cat/meow')
+    } catch (err) {
+      utl.sendMsg(msg, 'Sometimes the API doesn\'t work check: http://random.cat/help.html')
+    }
+    let embed = {
       description: 'Get kittie [here](' + image.data.file + ')',
       image: {
         url: image.data.file
       }
     }
     try {
-      msg.delete()
-      msg.channel.send({embed: embed})
+      utl.sendMsg(msg, { embed })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

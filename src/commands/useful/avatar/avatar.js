@@ -9,8 +9,7 @@ let commands = {
       size: 2048
     })
     try {
-      msg.delete()
-      msg.channel.send({
+      utl.sendMsg(msg, {
         embed: {
           description: 'Download avatar for ' + mention.username + ' [here](' + av + ')',
           image: {
@@ -19,7 +18,7 @@ let commands = {
         }
       })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

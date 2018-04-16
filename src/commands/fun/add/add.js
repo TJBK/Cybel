@@ -12,13 +12,12 @@ let commands = {
         say: suffix
       })
       s.save((s) => {
-        msg.delete()
-        msg.channel.send({embed: {
+        utl.sendMsg(msg, {embed: {
           description: 'I have stored ' + suffix + ' congrats'
-        }}).then(m => utl.deleteMsg(m))
+        }})
       })
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

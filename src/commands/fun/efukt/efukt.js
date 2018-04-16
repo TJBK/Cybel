@@ -50,7 +50,7 @@ let commands = {
               }
             })
           } catch (err) {
-            utl.error(msg, err)
+            utl.sendMsg(msg, err)
             msgObject.delete()
           }
         }

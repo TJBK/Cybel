@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import * as schemas from './databaseSchema/index'
-import {green} from 'chalk'
+import { green } from 'chalk'
 
 let startDB = (dbName) => {
   try {
