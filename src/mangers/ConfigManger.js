@@ -12,7 +12,7 @@ class ConfigManger {
   }
 
   GetConfig () {
-    if (!fs.existsSync(path.resolve(this.client.mangers.dimport._base, 'config.json'))) this.start()
+    if (!fs.existsSync(path.resolve(this.client.mangers.dimport.base, 'config.json'))) this.start()
   }
 
   start () {

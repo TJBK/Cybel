@@ -20,8 +20,10 @@ let commands = {
           }]
         }
       })
+      client.mangers.logger.write(msg.auther.id + 'used eval')
     } catch (err) {
       utl.sendError(msg, err)
+      client.mangers.logger.write(msg.auther.id + 'tried to use eval')
     }
   }
 }

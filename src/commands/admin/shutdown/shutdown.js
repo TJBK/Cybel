@@ -6,10 +6,10 @@ let commands = {
   process: async (msg, suffix, client, serverDoc, db, utl) => {
     if (!utl.isOwner(msg.member)) return msg.reply('Sorry you don"t have perms for that').then(message => message.delete({timeout: 60000})).catch(console.error)
     try {
-      msg.channel.send('Shutting down bye bye :C')
+      utl.sendMsg(msg, 'Shutting down bye bye :C')
       process.exit()
     } catch (err) {
-      utl.error(msg, err)
+      utl.sendError(msg, err)
     }
   }
 }

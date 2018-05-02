@@ -37,9 +37,10 @@ class CommandsManger {
     let suffix = msg.content.substring(cmdtext.length + serverDoc.prefix.length + 1)
     let cmd = commands.find(x => x.name === cmdtext)
     try {
+      this.client.mangers.logger.write(msg.author.id + ' excuted ' + cmdtext)
       cmd.process(msg, suffix, this.client, serverDoc, db, this.client.mangers.utl)
     } catch (err) {
-      // This is throw when it can't find the command
+      this.client.mangers.logger.write(msg.author.id + ' tried to run ' + cmdtext + ' with suffix ' + suffix + ' and got ' + err)
     }
   }
 }

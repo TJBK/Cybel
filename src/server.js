@@ -14,6 +14,7 @@ client.mangers.utl = new Mangers.UtlManger(client, db, config)
 client.mangers.commands = new Mangers.CommandsManger(client, db)
 client.mangers.level = new Mangers.LevelManger(client, db)
 client.mangers.server = new Mangers.ServerManger(client, db)
+client.mangers.logger = new Mangers.LoggerManger(client, __dirname)
 
 client.on('ready', () => {
   client.user.setPresence({
@@ -36,21 +37,22 @@ client.on('guildMemberAdd', (member) => client.mangers.server.userJoin(member))
 
 client.on('guildMemberRemove', (member) => client.mangers.server.userLeave(member))
 
-client.on('warn', console.warn)
-client.on('error', console.error)
+client.on('warn', (err) => this.client.mangers.logger.write('Error: ' + this.clean(err)))
+client.on('error', (err) => this.client.mangers.logger.write('Error: ' + this.clean(err)))
 
 let login = () => {
   client.login(config.token)
     .then(tokenA => console.log('Logged in with ' + green.bold(tokenA) + ''))
-    .catch(console.error)
+    .catch((err) => { console.error(err); this.client.mangers.logger.write('Error: ' + this.clean(err)) })
 }
 
 try {
+  client.mangers.logger.setup()
   login()
   db.startDB(config.dbName)
 } catch (err) {
   client.mangers.config.GetConfig()
 }
 
-process.on('unhandledRejection', console.error)
+process.on('unhandledRejection', (err) => this.client.mangers.logger.write('Error: ' + this.clean(err)))
 process.on('exit', () => client.destroy())

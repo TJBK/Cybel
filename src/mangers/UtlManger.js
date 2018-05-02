@@ -25,6 +25,7 @@ class UtlManger {
   }
 
   sendError (msg, err) {
+    this.client.mangers.logger.write('Error: ' + this.clean(err))
     msg.channel.send(`\`ERROR\` \`\`\`xl\n${this.clean(err)}\n\`\`\``, {split: true}).then(m => this.deleteMsg(m))
   }
 
